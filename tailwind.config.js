@@ -7,10 +7,16 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      sans: ['Titillium Web', 'sans-serif'],
+    },
     extend: {
-      fontFamily: {
-        main: ['Titillium Web', 'sans-serif'],
+      colors: {
+        dt: '#ff80ea',
       },
+      // fontFamily: {
+      //   main: ['Titillium Web', 'sans-serif'],
+      // },
     },
   },
   variants: {
@@ -18,3 +24,5 @@ module.exports = {
   },
   plugins: [tailwindForms],
 }
+
+// #ff80ea
