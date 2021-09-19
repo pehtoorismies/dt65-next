@@ -3,23 +3,21 @@ import { useFormik } from 'formik'
 import { TextInput } from '../../components/text-input'
 import { AuthTemplate } from './auth-template'
 
-interface LoginModel {
+interface ForgotPasswordModel {
   email: string
-  password: string
 }
+
+const initialValues: ForgotPasswordModel = { email: '' }
 
 const links = [
   {
     id: 1,
-    title: 'Salasana unohtunut?',
     href: '',
+    title: 'Kirjatumiseen',
   },
-  { id: 2, title: 'Rekisteröitymiseen', href: '' },
 ]
 
-const initialValues: LoginModel = { email: '', password: '' }
-
-export const Login: VFC = () => {
+export const ForgotPassword: VFC = () => {
   const formik = useFormik({
     initialValues,
     validate: (values) => {
@@ -31,7 +29,7 @@ export const Login: VFC = () => {
   })
 
   return (
-    <AuthTemplate title="Kirjaudu" links={links}>
+    <AuthTemplate title="Unohtunut salasana" links={links}>
       <form onSubmit={formik.handleSubmit}>
         <div className="p-1">
           <TextInput
@@ -45,21 +43,11 @@ export const Login: VFC = () => {
           {formik.touched['email'] && formik.errors['email'] && <div>werw</div>}
         </div>
         <div className="p-1">
-          <TextInput
-            id="password"
-            name="password"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
-            placeholder="Salasana*"
-          />
-        </div>
-        <div className="p-1">
           <button
             type="submit"
             className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
           >
-            Kirjaudu
+            Lähetä linkki
           </button>
         </div>
       </form>
