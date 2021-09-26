@@ -1,11 +1,11 @@
-import { Meta } from '@storybook/react'
-
-import { VFC } from 'react'
-import { Register } from '../register'
+import { Meta, Story } from '@storybook/react'
+import { Register, RegisterProps } from '../register'
 
 export default {
   component: Register,
-  title: 'Auth/Register',
+  title: 'Auth Forms',
 } as Meta
 
-export const LoginComponent: VFC = () => <Register />
+const Template: Story<RegisterProps> = (args) => <Register {...args} />
+
+export const RegisterComponent = Template.bind({})

@@ -1,7 +1,8 @@
-import { VFC, FC } from 'react'
-import { useFormik } from 'formik'
-import { TextInput } from '../../components/text-input'
+import { VFC } from 'react'
+import { Formik, Form, FormikHelpers } from 'formik'
+import { validateEmail, validatePassword } from './validations'
 import { AuthTemplate } from './auth-template'
+import { TextInput } from '@components/text-input'
 
 interface LoginModel {
   email: string
@@ -19,50 +20,39 @@ const links = [
 
 const initialValues: LoginModel = { email: '', password: '' }
 
-export const Login: VFC = () => {
-  const formik = useFormik({
-    initialValues,
-    validate: (values) => {
-      return {}
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
-  })
+export interface LoginProps {
+  onSubmit: (values: LoginModel, actions: FormikHelpers<LoginModel>) => void
+}
 
+export const Login: VFC<LoginProps> = ({ onSubmit }) => {
   return (
     <AuthTemplate title="Kirjaudu" links={links}>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="p-1">
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <Form>
           <TextInput
             id="email"
             name="email"
             type="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
             placeholder="Sähköpostiosoite*"
+            validate={validateEmail}
           />
-          {formik.touched['email'] && formik.errors['email'] && <div>werw</div>}
-        </div>
-        <div className="p-1">
           <TextInput
             id="password"
             name="password"
             type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
             placeholder="Salasana*"
+            validate={validatePassword}
           />
-        </div>
-        <div className="p-1">
-          <button
-            type="submit"
-            className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
-          >
-            Kirjaudu
-          </button>
-        </div>
-      </form>
+          <div className="p-1">
+            <button
+              type="submit"
+              className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
+            >
+              Kirjaudu
+            </button>
+          </div>
+        </Form>
+      </Formik>
     </AuthTemplate>
   )
 }
