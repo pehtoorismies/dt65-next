@@ -2,14 +2,14 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Layout } from '@components/layout/layout'
 
-const Home: NextPage = () => {
+const Me: NextPage = () => {
   return (
     <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>index</Layout>
+      <Layout>me</Layout>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">
         <a
@@ -26,4 +26,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default Me
