@@ -1,7 +1,9 @@
-import { VFC } from 'react'
-import * as React from 'react'
 import { ErrorMessage, Field } from 'formik'
+
 import { validateEmail } from '../views/auth/validations'
+
+import type { VFC } from 'react'
+
 
 interface Props {
   id: string

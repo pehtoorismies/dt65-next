@@ -1,6 +1,8 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
+
 import { Layout } from '@components/layout/layout'
+
+import type { NextPage } from 'next'
 
 const Me: NextPage = () => {
   return (
@@ -9,7 +11,7 @@ const Me: NextPage = () => {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>me</Layout>
+      <Layout title="Me">me</Layout>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">
         <a

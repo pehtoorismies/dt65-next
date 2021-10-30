@@ -1,5 +1,6 @@
-import { FC } from 'react'
 import { Link } from '@components/link'
+
+import type { FC } from 'react'
 
 interface LinkType {
   id: number

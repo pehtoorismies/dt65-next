@@ -1,5 +1,7 @@
-import { Meta, Story } from '@storybook/react'
 import { Register, RegisterProps } from '../register'
+
+import type { Meta, Story } from '@storybook/react'
+
 
 export default {
   component: Register,

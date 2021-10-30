@@ -1,50 +1,47 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
-  extends: [
-    'next',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:unicorn/recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:react/recommended',
-  ],
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'module',
-  },
+  extends: ['next/core-web-vitals', 'prettier', 'plugin:unicorn/recommended'],
   rules: {
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 0,
-    '@typescript-eslint/member-delimiter-style': [
+    'import/order': [
       'error',
       {
-        multiline: {
-          delimiter: 'none',
-          requireLast: true,
-        },
-        singleline: {
-          delimiter: 'comma',
-          requireLast: false,
-        },
+        pathGroups: [
+          {
+            pattern: '@domain/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: '@components/**',
+            group: 'internal',
+            position: 'after',
+          },
+        ],
+
+        pathGroupsExcludedImportTypes: ['type'],
+        'newlines-between': 'always',
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'index',
+          'sibling',
+          'parent',
+          'object',
+          'type',
+        ],
       },
     ],
-    'import/order': 'error',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'unicorn/prevent-abbreviations': [
       'error',
       {
         replacements: {
           props: false,
+          args: false,
           req: false,
           res: false,
-          args: false,
         },
       },
     ],
-    'no-console': ['error', { allow: ['warn', 'error'] }],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 }

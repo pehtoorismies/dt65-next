@@ -1,13 +1,9 @@
-import { FC } from 'react'
-import {
-  BeakerIcon,
-  HomeIcon,
-  PlusIcon,
-  UsersIcon,
-  UserIcon,
-} from '@heroicons/react/solid'
+import { HomeIcon, PlusIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
 import NextLink from 'next/link'
+
 import { Link } from '@components/link'
+
+import type { FC } from 'react'
 
 export interface LayoutProps {
   title: string
