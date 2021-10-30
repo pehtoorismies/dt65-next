@@ -15,6 +15,16 @@ module.exports = {
             group: 'internal',
             position: 'after',
           },
+          {
+            pattern: '@server/**',
+            group: 'internal',
+            position: 'after',
+          },
+          {
+            pattern: '@config/**',
+            group: 'internal',
+            position: 'after',
+          },
         ],
 
         pathGroupsExcludedImportTypes: ['type'],
@@ -40,6 +50,7 @@ module.exports = {
           args: false,
           req: false,
           res: false,
+          env: false,
         },
       },
     ],

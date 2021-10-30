@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: '16'
       - run: yarn
-      - run: yarn lint
+      - run: yarn lint:all
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required

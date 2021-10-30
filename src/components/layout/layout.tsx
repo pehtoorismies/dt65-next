@@ -16,7 +16,7 @@ export const Layout: FC<LayoutProps> = ({ children, title }) => {
     <div>
       <nav className="flex items-center justify-between bg-gray-100 fixed w-full p-2 ">
         <div className="flex items-center h-8">
-          <div className="font-semibold text-xl mr-6">DT65.events</div>
+          <div className="font-semibold text-xl mr-6">{title}</div>
           <ul className="hidden md:flex">
             <li className="mr-6">
               <Link href="/events" classes="text-blue-600">
