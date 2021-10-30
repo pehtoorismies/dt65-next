@@ -1,11 +1,13 @@
-import { Meta } from '@storybook/react'
-
-import { VFC } from 'react'
-import { ForgotPassword } from '../forgot-password'
+import { Meta, Story } from '@storybook/react'
+import { ForgotPassword, ForgotPasswordProps } from '../forgot-password'
 
 export default {
   component: ForgotPassword,
-  title: 'Auth/ForgotPassword',
+  title: 'Auth Forms',
 } as Meta
 
-export const LoginComponent: VFC = () => <ForgotPassword />
+const Template: Story<ForgotPasswordProps> = (args) => (
+  <ForgotPassword {...args} />
+)
+
+export const ForgotPasswordComponent = Template.bind({})

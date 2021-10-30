@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 0,
     '@typescript-eslint/member-delimiter-style': [
       'error',
       {

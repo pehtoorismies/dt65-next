@@ -1,11 +1,11 @@
-import { Meta } from '@storybook/react'
-
-import { VFC } from 'react'
-import { Login } from '../login'
+import { Meta, Story } from '@storybook/react'
+import { Login, LoginProps } from '../login'
 
 export default {
   component: Login,
-  title: 'Auth/Login',
+  title: 'Auth Forms',
 } as Meta
 
-export const LoginComponent: VFC = () => <Login />
+const Template: Story<LoginProps> = (args) => <Login {...args} />
+
+export const LoginComponent = Template.bind({})

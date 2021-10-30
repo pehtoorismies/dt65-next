@@ -1,7 +1,8 @@
-import { VFC, FC } from 'react'
-import { useFormik } from 'formik'
-import { TextInput } from '../../components/text-input'
+import { VFC } from 'react'
+import { ErrorMessage, Field, FormikHelpers, Formik, Form } from 'formik'
 import { AuthTemplate } from './auth-template'
+import { validateEmail, validatePassword, isRequired } from './validations'
+import { TextInput } from '@components/text-input'
 
 interface RegisterModel {
   email: string
@@ -27,79 +28,66 @@ const initialValues: RegisterModel = {
   name: '',
 }
 
-export const Register: VFC = () => {
-  const formik = useFormik({
-    initialValues,
-    validate: (values) => {
-      return {}
-    },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
-  })
+export interface RegisterProps {
+  onSubmit: (
+    values: RegisterModel,
+    actions: FormikHelpers<RegisterModel>
+  ) => void
+}
 
+export const Register: VFC<RegisterProps> = ({ onSubmit }) => {
   return (
     <AuthTemplate title="Rekisteröidy" links={links}>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="p-1">
+      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+        <Form>
           <TextInput
             id="email"
             name="email"
             type="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
             placeholder="Sähköpostiosoite*"
+            validate={validateEmail}
           />
-        </div>
-        <div className="p-1">
           <TextInput
             id="nick"
             name="nick"
             type="text"
-            onChange={formik.handleChange}
-            value={formik.values.nick}
             placeholder="Käyttäjätunnus / Nick*"
+            validate={isRequired}
           />
-        </div>
-        <div className="p-1">
+
           <TextInput
             id="name"
             name="name"
             type="text"
-            onChange={formik.handleChange}
-            value={formik.values.name}
             placeholder="Etunimi Sukunimi*"
+            validate={isRequired}
           />
-        </div>
-        <div className="p-1">
+
           <TextInput
             id="password"
             name="password"
             type="password"
-            onChange={formik.handleChange}
-            value={formik.values.password}
             placeholder="Salasana*"
+            validate={validatePassword}
           />
-        </div>
-        <div className="p-1">
+
           <TextInput
-            id="registerCode"
-            name="registerCode"
+            id="registerSecretCode"
+            name="registerSecretCode"
             type="text"
-            onChange={formik.handleChange}
-            value={formik.values.password}
             placeholder="Saamasi rekisteröintitunnus*"
+            validate={isRequired}
           />
-        </div>
-        <div className="p-1">
-          <button
-            type="submit"
-            className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
-          >
-            Kirjaudu
-          </button>
-        </div>
-      </form>
+          <div className="p-1">
+            <button
+              type="submit"
+              className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
+            >
+              Rekisteröidy
+            </button>
+          </div>
+        </Form>
+      </Formik>
     </AuthTemplate>
   )
 }
