@@ -7,14 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src --ext .ts --ext .tsx",
-    "typecheck": "tsc src/**/*.ts --noEmit --skipLibCheck",
+    "typecheck": "tsc --noEmit",
+    "lint:all": "yarn lint && yarn typecheck",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@heroicons/react": "1.0.4",
     "@tailwindcss/forms": "0.3.3",
+    "auth0": "^2.37.0",
     "formik": "2.2.9",
+    "fp-ts": "^2.11.5",
+    "io-ts": "^2.2.16",
     "next": "12.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
@@ -26,6 +30,7 @@
     "@storybook/addon-links": "^6.3.8",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/react": "^6.3.8",
+    "@types/auth0": "^2.34.4",
     "@types/faker": "^5.5.8",
     "@types/react": "17.0.21",
     "@types/uuid": "^8.3.1",
