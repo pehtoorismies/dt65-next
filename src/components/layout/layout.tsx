@@ -25,7 +25,6 @@ const UserProfile: VFC<Props> = ({ user }) => {
 
 export const Layout: FC = ({ children }) => {
   const { user: maybeUser } = useUserContext()
-
   const user = toNullable(maybeUser)
 
   return (

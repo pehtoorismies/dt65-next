@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ./src --ext .ts --ext .tsx",
+    "eslint": "eslint ./src --ext .ts --ext .tsx",
     "typecheck": "tsc --noEmit",
-    "lint:all": "yarn lint && yarn typecheck",
+    "lint": "yarn eslint && yarn typecheck",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

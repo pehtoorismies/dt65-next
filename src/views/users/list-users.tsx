@@ -1,4 +1,4 @@
-import type { User } from '@domain/user'
+import type { User } from '#domain/user'
 import type { VFC } from 'react'
 
 export interface ListUsersProps {
