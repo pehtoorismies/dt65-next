@@ -29,7 +29,7 @@ export const Layout: FC = ({ children }) => {
 
   return (
     <div>
-      <nav className="flex items-center justify-between bg-gray-100 fixed w-full p-2 ">
+      <nav className="flex items-center justify-between border-gray-300 bg-gray-50 fixed w-full p-2 border-t-0 border-b border-r-0 border-l-0">
         <div className="flex items-center h-8">
           <Link href="/" classes="text-blue-600">
             <div className="font-semibold text-xl mr-6">Dt65</div>
