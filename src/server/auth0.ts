@@ -5,28 +5,16 @@ import { AuthenticationClient } from 'auth0'
 import { getAuthConfig } from '#config/config'
 
 import type { TokenResponse } from 'auth0'
+import type { AuthResponseData, AuthResponseError } from '#domain/auth-response'
 
 const authConfig = getAuthConfig()
 
 const auth0 = new AuthenticationClient(authConfig)
 
-type Data = {
-  type: 'success'
-  accessToken: string
-  idToken: string
-  expiresIn: string
-}
-
-type Error = {
-  type: 'error'
-  code: string
-  message: string
-}
-
 export const loginAuth0User = async (
   email: string,
   password: string
-): Promise<Data | Error> => {
+): Promise<AuthResponseData | AuthResponseError> => {
   try {
     const authZeroUser: TokenResponse = await auth0.passwordGrant({
       password,
@@ -70,5 +58,3 @@ const Auth0Error = t.type({
     error_description: t.string,
   }),
 })
-
-type Auth0Error = t.TypeOf<typeof Auth0Error>

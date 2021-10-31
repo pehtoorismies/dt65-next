@@ -2,7 +2,6 @@ import { Register, RegisterProps } from '../register'
 
 import type { Meta, Story } from '@storybook/react'
 
-
 export default {
   component: Register,
   title: 'Auth Forms',
