@@ -36,3 +36,5 @@ yarn-error.log*
 # IDEA
 */.idea/workspace.xml
 */.idea/tasks.xml
+
+tsconfig.tsbuildinfo

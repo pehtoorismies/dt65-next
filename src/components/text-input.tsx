@@ -1,9 +1,6 @@
 import { ErrorMessage, Field } from 'formik'
 
-import { validateEmail } from '#views/auth/validations'
-
 import type { VFC } from 'react'
-
 
 interface Props {
   id: string
@@ -19,7 +16,6 @@ export const TextInput: VFC<Props> = (props) => {
       <Field
         {...props}
         className="w-full focus:ring-indigo-500 focus:border-indigo-500 rounded-none rounded-r-md border-gray-300"
-        validate={validateEmail}
       />
       <span className="text-red-600 font-semibold">
         <ErrorMessage name={props.name} />

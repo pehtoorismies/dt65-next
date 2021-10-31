@@ -24,13 +24,16 @@ export const useUserContext = () => {
   return contextValue
 }
 
-export const UserContextProvider: FC = ({ children }) => {
-  //  find user
-  // const value = localStorage.getItem('user')
+interface UserContextProvider {
+  getUser: () => Option<User>
+}
 
+export const UserContextProvider: FC<UserContextProvider> = ({
+  children,
+  getUser,
+}) => {
+  const user = getUser()
   return (
-    <UserContext.Provider value={{ user: none }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   )
 }

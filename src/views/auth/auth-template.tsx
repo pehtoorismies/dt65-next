@@ -1,4 +1,4 @@
-import { Link } from '@components/link'
+import { Link } from '#components/link'
 
 import type { FC } from 'react'
 

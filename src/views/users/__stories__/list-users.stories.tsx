@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { ListUsers, ListUsersProps } from '../list-users'
 
-import type { User } from '@domain/user'
+import type { User } from '#domain/user'
 import type { Meta, Story } from '@storybook/react'
 
 export default {

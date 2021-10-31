@@ -1,12 +1,12 @@
 import { Form, Formik } from 'formik'
-import { TextInput } from '@components/text-input'
+
+import { TextInput } from '#components/text-input'
 
 import { AuthTemplate } from './auth-template'
 import { validateEmail, validatePassword } from './validations'
 
 import type { FormikHelpers } from 'formik'
 import type { VFC } from 'react'
-
 
 interface LoginModel {
   email: string
