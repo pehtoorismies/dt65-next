@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 import { none, Option } from 'fp-ts/Option'
 
 import type { FC } from 'react'
-import type { User } from '@domain/user'
+import type { User } from '#domain/user'
 
 interface UserContextProps {
   user: Option<User>

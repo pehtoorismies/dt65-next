@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik'
-
 import { TextInput } from '@components/text-input'
 
 import { AuthTemplate } from './auth-template'

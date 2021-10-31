@@ -1,7 +1,5 @@
 import Head from 'next/head'
 
-import { Layout } from '@components/layout/layout'
-
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
@@ -11,7 +9,7 @@ const Home: NextPage = () => {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout title="Tapahtumat">
+      <div>
         <div>first</div>
         <div>koira 2</div>
         <div>koira 3</div>
@@ -37,7 +35,7 @@ const Home: NextPage = () => {
         <div>koira</div>
         <div>2nd last</div>
         <div>last</div>
-      </Layout>
+      </div>
     </div>
   )
 }

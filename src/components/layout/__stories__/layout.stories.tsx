@@ -1,4 +1,4 @@
-import { Layout, LayoutProps } from '../layout'
+import { Layout } from '../layout'
 
 import type { Meta, Story } from '@storybook/react'
 
@@ -7,7 +7,7 @@ export default {
   title: 'Layout',
 } as Meta
 
-const Template: Story<LayoutProps> = (args) => (
+const Template: Story = (args) => (
   <Layout {...args}>
     <div className="text-blue">
       <div>koira 1</div>

@@ -6,22 +6,7 @@ module.exports = {
       {
         pathGroups: [
           {
-            pattern: '@domain/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@components/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@server/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@config/**',
+            pattern: '#*/**',
             group: 'internal',
             position: 'after',
           },

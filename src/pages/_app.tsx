@@ -1,8 +1,7 @@
 import './base.css'
 
-import { UserContextProvider } from '@context/user-context'
-
-import { Layout } from '@components/layout/layout'
+import { UserContextProvider } from '#context/user-context'
+import { Layout } from '#components/layout/layout'
 
 import type { AppProps } from 'next/app'
 
