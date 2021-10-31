@@ -8,7 +8,7 @@ import { validateEmail, validatePassword } from './validations'
 import type { FormikHelpers } from 'formik'
 import type { VFC } from 'react'
 
-interface LoginModel {
+export interface LoginModel {
   email: string
   password: string
 }
