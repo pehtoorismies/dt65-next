@@ -16,7 +16,7 @@ interface Props {
 export const AuthTemplate: FC<Props> = ({ children, title, links }) => {
   return (
     <div>
-      <div className="bg-gray-50 py-12 px-2 sm:px-6 lg:px-8 bg-pink-100">
+      <div className="py-12 px-2 sm:px-6 lg:px-8">
         <div className="rounded bg-white rounded overflow-hidden shadow-xl p-5 grid max-w-md container-md mx-auto">
           <h1 className="text-3xl font-bold my-2 uppercase text-center">
             {title}
