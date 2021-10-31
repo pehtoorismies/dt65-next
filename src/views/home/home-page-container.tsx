@@ -1,5 +1,4 @@
 import Head from 'next/head'
-
 import { User } from '@domain/user'
 
 import type { NextPage } from 'next'

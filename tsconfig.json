@@ -21,23 +21,8 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@domain/*": [
-        "domain/*"
-      ],
-      "@server/*": [
-        "server/*"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@views/*": [
-        "views/*"
-      ],
-      "@context/*": [
-        "context/*"
+      "#*": [
+        "*"
       ]
     },
     "incremental": true

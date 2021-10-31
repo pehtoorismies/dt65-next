@@ -1,4 +1,4 @@
-import { loginAuth0User } from '@server/auth0'
+import { loginAuth0User } from '#server/auth0'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 

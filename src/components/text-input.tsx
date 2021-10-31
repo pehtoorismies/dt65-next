@@ -1,6 +1,6 @@
 import { ErrorMessage, Field } from 'formik'
 
-import { validateEmail } from '../views/auth/validations'
+import { validateEmail } from '#views/auth/validations'
 
 import type { VFC } from 'react'
 

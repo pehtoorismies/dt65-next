@@ -1,7 +1,6 @@
 import * as t from 'io-ts'
 import { isRight } from 'fp-ts/lib/Either'
 import { AuthenticationClient } from 'auth0'
-
 import { getAuthConfig } from '@config/config'
 
 import type { TokenResponse } from 'auth0'
