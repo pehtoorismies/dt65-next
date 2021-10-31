@@ -1,22 +1,41 @@
 import { HomeIcon, PlusIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
 import NextLink from 'next/link'
+import { toNullable } from 'fp-ts/Option'
+
+import { useUserContext } from '@context/user-context'
 
 import { Link } from '@components/link'
 
-import type { FC } from 'react'
+import type { FC, VFC } from 'react'
+import type { User } from '@domain/user'
 
-export interface LayoutProps {
-  title: string
+export interface Props {
+  user: User
 }
 
 const iconClass = 'h-8 w-8 text-black-500 cursor-pointer'
 
-export const Layout: FC<LayoutProps> = ({ children, title }) => {
+const UserProfile: VFC<Props> = ({ user }) => {
+  return (
+    <>
+      <div className="mr-2">{user.nick}</div>
+      <UserIcon className={iconClass} />
+    </>
+  )
+}
+
+export const Layout: FC = ({ children }) => {
+  const { user: maybeUser } = useUserContext()
+
+  const user = toNullable(maybeUser)
+
   return (
     <div>
       <nav className="flex items-center justify-between bg-gray-100 fixed w-full p-2 ">
         <div className="flex items-center h-8">
-          <div className="font-semibold text-xl mr-6">{title}</div>
+          <Link href="/" classes="text-blue-600">
+            <div className="font-semibold text-xl mr-6">Dt65</div>
+          </Link>
           <ul className="hidden md:flex">
             <li className="mr-6">
               <Link href="/events" classes="text-blue-600">
@@ -34,8 +53,7 @@ export const Layout: FC<LayoutProps> = ({ children, title }) => {
           </ul>
         </div>
         <div className="mr-2 hidden md:flex items-center">
-          <div className="mr-2">pehtoorismies</div>
-          <UserIcon className={iconClass} />
+          {user && <UserProfile user={user} />}
         </div>
       </nav>
 
