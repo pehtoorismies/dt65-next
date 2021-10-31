@@ -32,6 +32,12 @@
       ],
       "@config/*": [
         "config/*"
+      ],
+      "@views/*": [
+        "views/*"
+      ],
+      "@context/*": [
+        "context/*"
       ]
     },
     "incremental": true
