@@ -1,10 +1,8 @@
 import Head from 'next/head'
-import { pipe } from 'fp-ts/function'
-import { fold } from 'fp-ts/Either'
-
-import { AuthData, AuthError } from '#domain/auth-response'
+import * as E from 'fp-ts/Either'
 
 import { Login } from './components/login'
+import { auth0ApiClient } from './auth0-api-client'
 
 import type { FormikHelpers } from 'formik'
 import type { LoginModel } from './components/login'
@@ -15,37 +13,13 @@ const onSubmit = async (
   actions: FormikHelpers<LoginModel>
 ) => {
   actions.setSubmitting(true)
-  const response = await fetch('/api/login', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(values),
-  })
+  const result = await auth0ApiClient.login(values)()
 
-  if (response.status === 200) {
-    const authData = await response.json()
-
-    pipe(
-      AuthData.decode(authData),
-      fold(
-        () => {},
-        () => {}
-      )
-    )
-  } else if (response.status === 400) {
-    const authError = await response.json()
-
-    pipe(
-      AuthError.decode(authError),
-      fold(
-        () => {},
-        () => {}
-      )
-    )
+  if (E.isRight(result)) {
+    // write to local storage
   } else {
-    console.error('Internal server error', response)
+    const { message } = result.left
+    actions.setErrors({ email: message, password: message })
   }
 
   actions.setSubmitting(false)
