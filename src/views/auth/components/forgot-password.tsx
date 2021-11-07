@@ -1,18 +1,20 @@
-import { Form, Formik } from 'formik'
+import { useFormik } from 'formik'
 
 import { TextInput } from '#components/text-input'
+import { Button } from '#components/button/button'
 
 import { AuthTemplate } from './auth-template'
 import { validateEmail } from './validations'
 
-import type { FormikHelpers } from 'formik'
 import type { VFC } from 'react'
 
-interface ForgotPasswordModel {
-  email: string
-}
+const INITIAL_VALUES: ForgotPasswordModel = { email: '' }
 
-const initialValues: ForgotPasswordModel = { email: '' }
+const validate = (values: ForgotPasswordModel) => {
+  const errors: Partial<ForgotPasswordModel> = {}
+  errors.email = validateEmail(values.email)
+  return errors
+}
 
 const links = [
   {
@@ -22,35 +24,50 @@ const links = [
   },
 ]
 
-export interface ForgotPasswordProps {
-  onSubmit: (
-    values: ForgotPasswordModel,
-    actions: FormikHelpers<ForgotPasswordModel>
-  ) => void
+interface ForgotPasswordModel {
+  email: string
 }
 
-export const ForgotPassword: VFC<ForgotPasswordProps> = ({ onSubmit }) => {
-  return (
-    <AuthTemplate title="Unohtunut salasana" links={links}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form>
-          <TextInput
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Sähköpostiosoite*"
-          />
+export interface ForgotPasswordProps {
+  generalError?: string
+  isSubmitting: boolean
+  onSubmit: (values: ForgotPasswordModel) => void
+}
 
-          <div className="p-1">
-            <button
-              type="submit"
-              className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
-            >
-              Lähetä salasana
-            </button>
-          </div>
-        </Form>
-      </Formik>
+export const ForgotPassword: VFC<ForgotPasswordProps> = ({
+  onSubmit,
+  generalError,
+  isSubmitting,
+}) => {
+  const formik = useFormik<ForgotPasswordModel>({
+    initialValues: INITIAL_VALUES,
+    onSubmit,
+    validate,
+  })
+
+  return (
+    <AuthTemplate
+      title="Unohtunut salasana"
+      links={links}
+      generalError={generalError}
+    >
+      <form onSubmit={formik.handleSubmit}>
+        <TextInput
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Sähköpostiosoite*"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          error={formik.errors.email}
+        />
+
+        <div className="p-1">
+          <Button isLoading={isSubmitting} type="submit" className="w-full">
+            Lähetä salasana
+          </Button>
+        </div>
+      </form>
     </AuthTemplate>
   )
 }
