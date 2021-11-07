@@ -39,7 +39,6 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({ onSubmit }) => {
             name="email"
             type="email"
             placeholder="Sähköpostiosoite*"
-            validate={validateEmail}
           />
 
           <div className="p-1">

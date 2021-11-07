@@ -24,7 +24,8 @@ IsSubmitting.args = {
 
 GeneralError.args = {
   ...NoError.args,
-  generalError: 'Some general error',
+  generalError:
+    'Manducare foris ducunt ad placidus navis. The special uniqueness of meditation is to emerge with futility.',
 }
 FieldError.args = {
   ...NoError.args,
