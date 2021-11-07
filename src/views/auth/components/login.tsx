@@ -1,11 +1,12 @@
-import { Form, Formik } from 'formik'
+import { useFormik } from 'formik'
+import { useEffect } from 'react'
 
 import { TextInput } from '#components/text-input'
+import { Button } from '#components/button/button'
 
 import { AuthTemplate } from './auth-template'
 import { validateEmail, validatePassword } from './validations'
 
-import type { FormikHelpers } from 'formik'
 import type { VFC } from 'react'
 
 export interface LoginModel {
@@ -22,41 +23,71 @@ const links = [
   { id: 2, title: 'Rekisteröitymiseen', href: '' },
 ]
 
-const initialValues: LoginModel = { email: '', password: '' }
+const INITIAL_VALUES: LoginModel = { email: '', password: '' }
 
 export interface LoginProps {
-  onSubmit: (values: LoginModel, actions: FormikHelpers<LoginModel>) => void
+  onSubmit: (values: LoginModel) => void
+  fieldError?: string
+  generalError?: string
+  isSubmitting: boolean
 }
 
-export const Login: VFC<LoginProps> = ({ onSubmit }) => {
+const validate = (values: LoginModel) => {
+  const errors: Partial<LoginModel> = {}
+  errors.email = validateEmail(values.email)
+  errors.password = validatePassword(values.email)
+  return errors
+}
+
+export const Login: VFC<LoginProps> = ({
+  onSubmit,
+  fieldError,
+  generalError,
+  isSubmitting,
+}) => {
+  const formik = useFormik<LoginModel>({
+    initialValues: INITIAL_VALUES,
+    onSubmit,
+    validate,
+  })
+  useEffect(() => {
+    formik.setSubmitting(isSubmitting)
+    if (fieldError) {
+      formik.setErrors({
+        email: fieldError,
+        password: fieldError,
+      })
+    }
+  }, [fieldError, isSubmitting, formik])
+
   return (
     <AuthTemplate title="Kirjaudu" links={links}>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form>
-          <TextInput
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Sähköpostiosoite*"
-            validate={validateEmail}
-          />
-          <TextInput
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Salasana*"
-            validate={validatePassword}
-          />
-          <div className="p-1">
-            <button
-              type="submit"
-              className="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded"
-            >
-              Kirjaudu
-            </button>
-          </div>
-        </Form>
-      </Formik>
+      {generalError && <div>{generalError}</div>}
+      <form onSubmit={formik.handleSubmit}>
+        <TextInput
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Sähköpostiosoite*"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          error={formik.errors.email}
+        />
+        <TextInput
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Salasana*"
+          onChange={formik.handleChange}
+          value={formik.values.password}
+          error={formik.errors.password}
+        />
+        <div className="p-1">
+          <Button isLoading={isSubmitting} type="submit" className="w-full">
+            Kirjaudu
+          </Button>
+        </div>
+      </form>
     </AuthTemplate>
   )
 }
