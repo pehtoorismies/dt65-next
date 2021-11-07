@@ -8,7 +8,6 @@ import { AuthTemplate } from './auth-template'
 import { validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
-import { AlertBox } from './alert-box'
 
 export interface LoginModel {
   email: string
@@ -62,8 +61,7 @@ export const Login: VFC<LoginProps> = ({
   }, [fieldError, isSubmitting, formik])
 
   return (
-    <AuthTemplate title="Kirjaudu" links={links}>
-      {generalError && <AlertBox title="Virhe" text={generalError} />}
+    <AuthTemplate title="Kirjaudu" links={links} generalError={generalError}>
       <form onSubmit={formik.handleSubmit}>
         <TextInput
           id="email"
