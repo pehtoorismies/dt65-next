@@ -15,3 +15,9 @@ Primary.args = {
   children: 'Nappi',
   isLoading: true,
 }
+
+Primary.args = {
+  children: 'Nappi',
+  isLoading: true,
+  className: 'w-full',
+}
