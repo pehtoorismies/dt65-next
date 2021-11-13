@@ -11,7 +11,7 @@ export const HomePageContainer: NextPage = () => {
   const router = useRouter()
 
   const redirect = fold(
-    () => router.push('/login'),
+    () => router.push('/auth/login'),
     () => router.push('/events')
   )
 

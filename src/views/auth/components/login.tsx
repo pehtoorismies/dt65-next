@@ -79,8 +79,8 @@ export const Login: VFC<LoginProps> = ({
           </Button>
         </div>
       </form>
-      <Link href="/forgot-password">Unohtunut salasana</Link>
-      <Link href="/register">Rekisteröidy</Link>
+      <Link href="/auth/forgot-password">Unohtunut salasana</Link>
+      <Link href="/auth/register">Rekisteröidy</Link>
     </AuthTemplate>
   )
 }

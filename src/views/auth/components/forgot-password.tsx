@@ -17,7 +17,7 @@ const validate = (values: ForgotPasswordModel) => {
   return errors
 }
 
-interface ForgotPasswordModel {
+export interface ForgotPasswordModel {
   email: string
 }
 
