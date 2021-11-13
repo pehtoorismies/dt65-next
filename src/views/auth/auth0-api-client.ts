@@ -6,9 +6,10 @@ import {
   AuthError,
   validateAuthData,
   validateAuthError,
-} from '#domain/auth-response'
+} from '#domain/auth'
 
 import { LoginModel } from './components/login'
+import { ForgotPasswordModel } from './components/forgot-password'
 
 const onRejected = (error: unknown): AuthError => {
   if (error instanceof Error) {
@@ -38,6 +39,21 @@ const postLogin = (model: LoginModel): TE.TaskEither<AuthError, Response> =>
     })
   }, onRejected)
 
+const postForgotPassword = (
+  model: ForgotPasswordModel
+): TE.TaskEither<AuthError, Response> => {
+  TE.tryCatch((): Promise<Response> => {
+    return fetch('/api/forgot-password', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(model),
+    })
+  }, onRejected)
+}
+
 const processResponse = (x: Response): TE.TaskEither<AuthError, Response> => {
   if (x.status === 200) {
     return TE.of(x)
@@ -56,6 +72,17 @@ export const auth0ApiClient = {
     return pipe(
       model,
       postLogin,
+      TE.chain(processResponse),
+      TE.chain(parseJsonResponse),
+      TE.chain(validateAuthData)
+    )
+  },
+  forgotPassword: (
+    model: ForgotPasswordModel
+  ): TE.TaskEither<AuthError, { message: string }> => {
+    return pipe(
+      model,
+      postForgotPassword,
       TE.chain(processResponse),
       TE.chain(parseJsonResponse),
       TE.chain(validateAuthData)

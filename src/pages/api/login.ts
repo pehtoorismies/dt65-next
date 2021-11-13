@@ -1,14 +1,16 @@
 import { loginAuth0User } from '#server/auth0'
+import { isAuthData } from '#domain/auth'
 
-import type { AuthResponseData, AuthResponseError } from '#domain/auth-response'
+import type { AuthData, AuthError } from '#domain/auth'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import type { ResponseSuccess, ResponseError } from '#server/response'
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<AuthResponseError | AuthResponseData>
+  res: NextApiResponse<ResponseError<AuthError> | ResponseSuccess<AuthData>>
 ) {
   if (req.method !== 'POST') {
-    res.status(400).json({
+    return res.status(400).json({
       message: 'Invalid http method',
       code: 'invalid_request',
       type: 'error',
@@ -18,21 +20,15 @@ export default async function handler(
     const password = req.body.password
 
     if (!email || !password) {
-      res.status(400).json({
+      return res.status(400).json({
         message: 'Missing fields',
         code: 'invalid_request',
         type: 'error',
       })
     }
     const response = await loginAuth0User(email, password)
-
-    switch (response.type) {
-      case 'success': {
-        return res.status(200).json(response)
-      }
-      case 'error': {
-        return res.status(400).json(response)
-      }
-    }
+    return isAuthData(response)
+      ? res.status(200).json({ type: 'success', ...response })
+      : res.status(400).json({ type: 'error', ...response })
   }
 }

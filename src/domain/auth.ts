@@ -26,12 +26,8 @@ export const AuthError = t.type({
 export type AuthData = t.TypeOf<typeof AuthData>
 export type AuthError = t.TypeOf<typeof AuthError>
 
-export type AuthResponseData = AuthData & {
-  type: 'success'
-}
-
-export type AuthResponseError = AuthError & {
-  type: 'error'
+export const isAuthData = (auth: AuthData | AuthError): auth is AuthData => {
+  return (auth as AuthData).idToken !== undefined
 }
 
 export const validateAuthData = (

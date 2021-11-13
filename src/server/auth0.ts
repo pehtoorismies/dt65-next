@@ -5,7 +5,7 @@ import { AuthenticationClient } from 'auth0'
 import { getAuthConfig } from '#config/config'
 
 import type { TokenResponse } from 'auth0'
-import type { AuthResponseData, AuthResponseError } from '#domain/auth-response'
+import type { AuthData, AuthError } from '#domain/auth'
 
 const authConfig = getAuthConfig()
 
@@ -14,7 +14,7 @@ const auth0 = new AuthenticationClient(authConfig)
 export const loginAuth0User = async (
   email: string,
   password: string
-): Promise<AuthResponseData | AuthResponseError> => {
+): Promise<AuthError | AuthData> => {
   try {
     const authZeroUser: TokenResponse = await auth0.passwordGrant({
       password,
@@ -25,7 +25,6 @@ export const loginAuth0User = async (
     })
 
     return {
-      type: 'success',
       accessToken: authZeroUser.access_token || '',
       idToken: authZeroUser.id_token || '',
       expiresIn: '0',
@@ -37,17 +36,30 @@ export const loginAuth0User = async (
     })
     if (isRight(authError)) {
       return {
-        type: 'error',
         code: authError.right.message.error,
         message: authError.right.message.error_description,
       }
     }
 
     return {
-      type: 'error',
       code: 'unexpect_error',
-      message: 'Unknown error occured',
+      message: 'Unknown error occurred',
     }
+  }
+}
+
+export const requestChangePasswordEmail = async (
+  email: string
+): Promise<{ type: 'success' | 'error' }> => {
+  try {
+    await auth0.requestChangePasswordEmail({
+      email,
+      connection: 'Username-Password-Authentication',
+    })
+    return { type: 'success' }
+  } catch (error) {
+    console.error(error)
+    return { type: 'error' }
   }
 }
 
