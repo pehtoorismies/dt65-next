@@ -2,6 +2,7 @@ import { useFormik } from 'formik'
 
 import { TextInput } from '#components/text-input'
 import { Button } from '#components/button/button'
+import { Link } from '#components/link'
 
 import { AuthTemplate } from './auth-template'
 import { validateEmail } from './validations'
@@ -15,14 +16,6 @@ const validate = (values: ForgotPasswordModel) => {
   errors.email = validateEmail(values.email)
   return errors
 }
-
-const links = [
-  {
-    id: 1,
-    href: '',
-    title: 'Kirjatumiseen',
-  },
-]
 
 interface ForgotPasswordModel {
   email: string
@@ -46,11 +39,7 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
   })
 
   return (
-    <AuthTemplate
-      title="Unohtunut salasana"
-      links={links}
-      generalError={generalError}
-    >
+    <AuthTemplate title="Unohtunut salasana" generalError={generalError}>
       <form onSubmit={formik.handleSubmit}>
         <TextInput
           id="email"
@@ -61,13 +50,13 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
           value={formik.values.email}
           error={formik.errors.email}
         />
-
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">
             Lähetä salasana
           </Button>
         </div>
       </form>
+      <Link href="/auth/login">Kirjautumiseen</Link>
     </AuthTemplate>
   )
 }

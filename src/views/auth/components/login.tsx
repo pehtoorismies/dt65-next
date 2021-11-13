@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 import { TextInput } from '#components/text-input'
 import { Button } from '#components/button/button'
+import { Link } from '#components/link'
 
 import { AuthTemplate } from './auth-template'
 import { validateEmail, validatePassword } from './validations'
@@ -13,15 +14,6 @@ export interface LoginModel {
   email: string
   password: string
 }
-
-const links = [
-  {
-    id: 1,
-    title: 'Salasana unohtunut?',
-    href: '',
-  },
-  { id: 2, title: 'Rekisteröitymiseen', href: '' },
-]
 
 const INITIAL_VALUES: LoginModel = { email: '', password: '' }
 
@@ -61,7 +53,7 @@ export const Login: VFC<LoginProps> = ({
   }, [fieldError, isSubmitting, formik])
 
   return (
-    <AuthTemplate title="Kirjaudu" links={links} generalError={generalError}>
+    <AuthTemplate title="Kirjaudu" generalError={generalError}>
       <form onSubmit={formik.handleSubmit}>
         <TextInput
           id="email"
@@ -87,6 +79,8 @@ export const Login: VFC<LoginProps> = ({
           </Button>
         </div>
       </form>
+      <Link href="/forgot-password">Unohtunut salasana</Link>
+      <Link href="/register">Rekisteröidy</Link>
     </AuthTemplate>
   )
 }
