@@ -8,8 +8,7 @@ import {
   validateAuthError,
 } from '#domain/auth'
 
-import { LoginModel } from './components/login'
-import { ForgotPasswordModel } from './components/forgot-password'
+import type { LoginModel, ForgotPasswordModel } from '#domain/auth'
 
 const onRejected = (error: unknown): AuthError => {
   if (error instanceof Error) {

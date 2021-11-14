@@ -8,6 +8,7 @@ import { AuthTemplate } from './auth-template'
 import { validateEmail } from './validations'
 
 import type { VFC } from 'react'
+import type { ForgotPasswordModel } from '#domain/auth'
 
 const INITIAL_VALUES: ForgotPasswordModel = { email: '' }
 
@@ -15,10 +16,6 @@ const validate = (values: ForgotPasswordModel) => {
   const errors: Partial<ForgotPasswordModel> = {}
   errors.email = validateEmail(values.email)
   return errors
-}
-
-export interface ForgotPasswordModel {
-  email: string
 }
 
 export interface ForgotPasswordProps {

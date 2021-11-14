@@ -1,24 +1,40 @@
 import * as t from 'io-ts'
 import { isRight } from 'fp-ts/lib/Either'
-import { AuthenticationClient } from 'auth0'
+import { AuthenticationClient, ManagementClient } from 'auth0'
 
 import { getAuthConfig } from '#config/config'
 
 import type { TokenResponse } from 'auth0'
-import type { AuthData, AuthError } from '#domain/auth'
+import type {
+  AuthData,
+  AuthError,
+  ForgotPasswordModel,
+  LoginModel,
+  RegisterModel,
+} from '#domain/auth'
 
 const authConfig = getAuthConfig()
 
 const auth0 = new AuthenticationClient(authConfig)
 
+const getAuth0Management = async (): Promise<ManagementClient> => {
+  const client = await auth0.clientCredentialsGrant({
+    audience: `https://${authConfig.domain}/api/v2/`,
+    scope: 'read:users update:users',
+  })
+  return new ManagementClient({
+    token: client.access_token,
+    domain: authConfig.domain,
+  })
+}
+
 export const loginAuth0User = async (
-  email: string,
-  password: string
+  model: LoginModel
 ): Promise<AuthError | AuthData> => {
   try {
     const authZeroUser: TokenResponse = await auth0.passwordGrant({
-      password,
-      username: email,
+      password: model.password,
+      username: model.email,
       scope:
         'read:events write:events read:me write:me read:users openid profile',
       audience: authConfig.jwtAudience,
@@ -48,12 +64,31 @@ export const loginAuth0User = async (
   }
 }
 
+export const createAuth0User = async (model: RegisterModel): Promise<any> => {
+  const management = await getAuth0Management()
+
+  return management.createUser({
+    connection: 'Username-Password-Authentication',
+    email: model.email,
+    nickname: model.nick,
+    password: model.password,
+    name: model.name,
+    verify_email: true,
+    email_verified: false,
+    user_metadata: {
+      subscribeWeeklyEmail: true,
+      subscribeEventCreationEmail: true,
+    },
+    app_metadata: { role: 'USER' },
+  })
+}
+
 export const requestChangePasswordEmail = async (
-  email: string
+  model: ForgotPasswordModel
 ): Promise<{ type: 'success' | 'error' }> => {
   try {
     await auth0.requestChangePasswordEmail({
-      email,
+      email: model.email,
       connection: 'Username-Password-Authentication',
     })
     return { type: 'success' }

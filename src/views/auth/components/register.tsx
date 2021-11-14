@@ -8,14 +8,7 @@ import { AuthTemplate } from './auth-template'
 import { isRequired, validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
-
-interface RegisterModel {
-  email: string
-  nick: string
-  name: string
-  password: string
-  registerSecretCode: string
-}
+import type { RegisterModel } from '#domain/auth'
 
 const INITIAL_VALUES: RegisterModel = {
   email: '',

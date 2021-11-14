@@ -5,8 +5,8 @@ import { useState } from 'react'
 import { ForgotPassword } from './components/forgot-password'
 import { auth0ApiClient } from './auth0-api-client'
 
-import type { ForgotPasswordModel } from './components/forgot-password'
 import type { NextPage } from 'next'
+import type { ForgotPasswordModel } from '#domain/auth'
 
 export const ForgotPasswordPageContainer: NextPage = () => {
   const [isSubmitting, setSubmitting] = useState(false)

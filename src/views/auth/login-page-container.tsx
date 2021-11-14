@@ -5,8 +5,8 @@ import { useState } from 'react'
 import { Login } from './components/login'
 import { auth0ApiClient } from './auth0-api-client'
 
-import type { LoginModel } from './components/login'
 import type { NextPage } from 'next'
+import type { LoginModel } from '#domain/auth'
 
 export const LoginPageContainer: NextPage = () => {
   const [isSubmitting, setSubmitting] = useState(false)

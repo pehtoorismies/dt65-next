@@ -9,11 +9,7 @@ import { AuthTemplate } from './auth-template'
 import { validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
-
-export interface LoginModel {
-  email: string
-  password: string
-}
+import type { LoginModel } from '#domain/auth'
 
 const INITIAL_VALUES: LoginModel = { email: '', password: '' }
 
