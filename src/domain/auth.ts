@@ -41,3 +41,23 @@ export const validateAuthError = (
 ): TE.TaskEither<AuthError, AuthError> => {
   return pipe(res, AuthError.decode, TE.fromEither, TE.mapLeft(decodeError))
 }
+
+export const LoginModel = t.type({
+  email: t.string,
+  password: t.string,
+})
+export type LoginModel = t.TypeOf<typeof LoginModel>
+
+export const ForgotPasswordModel = t.type({
+  email: t.string,
+})
+export type ForgotPasswordModel = t.TypeOf<typeof ForgotPasswordModel>
+
+export const RegisterModel = t.type({
+  email: t.string,
+  nick: t.string,
+  name: t.string,
+  password: t.string,
+  registerSecretCode: t.string,
+})
+export type RegisterModel = t.TypeOf<typeof RegisterModel>
