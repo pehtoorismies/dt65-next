@@ -1,4 +1,5 @@
 import { useFormik } from 'formik'
+import { useEffect } from 'react'
 
 import { TextInput } from '#components/text-input'
 import { Link } from '#components/link'
@@ -44,6 +45,10 @@ export const Register: VFC<RegisterProps> = ({
     onSubmit,
     validate,
   })
+
+  useEffect(() => {
+    formik.setSubmitting(isSubmitting)
+  }, [isSubmitting, formik])
 
   return (
     <AuthTemplate title="Rekisteröidy" generalError={generalError}>

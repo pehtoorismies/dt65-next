@@ -3,7 +3,7 @@ import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
 import { Login } from './components/login'
-import { auth0ApiClient } from './auth0-api-client'
+import { apiLogin } from './api-client/api-login'
 
 import type { NextPage } from 'next'
 import type { LoginModel } from '#domain/auth'
@@ -14,7 +14,8 @@ export const LoginPageContainer: NextPage = () => {
 
   const onSubmit = async (values: LoginModel) => {
     setSubmitting(true)
-    const result = await auth0ApiClient.login(values)()
+    const login = apiLogin(values)
+    const result = await login()
 
     if (E.isRight(result)) {
       // write to local storage

@@ -10,6 +10,7 @@ type AuthConfig = {
   clientId: string
   clientSecret: string
   jwtAudience: string
+  registerSecretCode: string
 }
 
 export const getAuthConfig = (): AuthConfig => {
@@ -18,5 +19,9 @@ export const getAuthConfig = (): AuthConfig => {
     clientId: getEnv(process.env.AUTH_CLIENT_ID, 'AUTH_DOMAIN'),
     clientSecret: getEnv(process.env.AUTH_CLIENT_SECRET, 'AUTH_CLIENT_SECRET'),
     jwtAudience: getEnv(process.env.JWT_AUDIENCE, 'JWT_AUDIENCE'),
+    registerSecretCode: getEnv(
+      process.env.REGISTER_SECRET_CODE,
+      'REGISTER_SECRET_CODE'
+    ),
   }
 }
