@@ -9,23 +9,31 @@ import type { AuthError } from '#domain/auth'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { ResponseError, ResponseSuccess } from '#server/response'
 
+const isAuthError = (
+  auth: AuthError | { message: 'ok' }
+): auth is AuthError => {
+  return (
+    (auth as AuthError).message !== undefined &&
+    (auth as AuthError).code !== undefined
+  )
+}
+
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<
     ResponseError<AuthError> | ResponseSuccess<{ message: string }>
   >
 ) => {
-  const { type } = await requestChangePasswordEmail(
+  const response = await requestChangePasswordEmail(
     req.body as ForgotPasswordModel
   )
 
-  return type === 'error'
+  return isAuthError(response)
     ? res.status(400).json({
         type: 'error',
-        message: 'Could not send password',
-        code: 'server_error',
+        ...response,
       })
-    : res.status(200).json({ type: 'success', message: 'ok' })
+    : res.status(200).json({ type: 'success', ...response })
 }
 
 export default withVerifyPostMethod(

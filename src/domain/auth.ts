@@ -2,7 +2,7 @@ import * as t from 'io-ts'
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/function'
 
-const decodeError = (errors: t.Errors): AuthError => {
+export const decodeError = (errors: t.Errors): AuthError => {
   const missingKeys = errors.map((error) =>
     error.context.map(({ key }) => key).join('.')
   )
@@ -28,12 +28,6 @@ export type AuthError = t.TypeOf<typeof AuthError>
 
 export const isAuthData = (auth: AuthData | AuthError): auth is AuthData => {
   return (auth as AuthData).idToken !== undefined
-}
-
-export const validateAuthData = (
-  res: unknown
-): TE.TaskEither<AuthError, AuthData> => {
-  return pipe(res, AuthData.decode, TE.fromEither, TE.mapLeft(decodeError))
 }
 
 export const validateAuthError = (

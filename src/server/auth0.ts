@@ -13,6 +13,14 @@ import type {
   RegisterModel,
 } from '#domain/auth'
 
+const Auth0Error = t.type({
+  name: t.string,
+  message: t.type({
+    error: t.string,
+    error_description: t.string,
+  }),
+})
+
 const authConfig = getAuthConfig()
 
 const auth0 = new AuthenticationClient(authConfig)
@@ -41,19 +49,22 @@ export const loginAuth0User = async (
     })
 
     return {
-      accessToken: authZeroUser.access_token || '',
+      accessToken: authZeroUser.access_token,
       idToken: authZeroUser.id_token || '',
       expiresIn: '0',
     }
-  } catch (error: any) {
-    const authError = Auth0Error.decode({
-      name: error.name,
-      message: JSON.parse(error.message),
-    })
-    if (isRight(authError)) {
-      return {
-        code: authError.right.message.error,
-        message: authError.right.message.error_description,
+  } catch (error) {
+    if (error instanceof Error) {
+      const authError = Auth0Error.decode({
+        name: error.name,
+        message: JSON.parse(error.message),
+      })
+
+      if (isRight(authError)) {
+        return {
+          code: authError.right.message.error,
+          message: authError.right.message.error_description,
+        }
       }
     }
 
@@ -64,44 +75,57 @@ export const loginAuth0User = async (
   }
 }
 
-export const createAuth0User = async (model: RegisterModel): Promise<any> => {
+export const createAuth0User = async (
+  model: RegisterModel
+): Promise<AuthError | { message: 'ok' }> => {
   const management = await getAuth0Management()
 
-  return management.createUser({
-    connection: 'Username-Password-Authentication',
-    email: model.email,
-    nickname: model.nick,
-    password: model.password,
-    name: model.name,
-    verify_email: true,
-    email_verified: false,
-    user_metadata: {
-      subscribeWeeklyEmail: true,
-      subscribeEventCreationEmail: true,
-    },
-    app_metadata: { role: 'USER' },
-  })
+  try {
+    await management.createUser({
+      connection: 'Username-Password-Authentication',
+      email: model.email,
+      nickname: model.nick,
+      password: model.password,
+      name: model.name,
+      verify_email: true,
+      email_verified: false,
+      user_metadata: {
+        subscribeWeeklyEmail: true,
+        subscribeEventCreationEmail: true,
+      },
+      app_metadata: { role: 'USER' },
+    })
+
+    return { message: 'ok' }
+  } catch (error) {
+    if (error instanceof Error) {
+      return {
+        code: error.name,
+        message: error.message,
+      }
+    }
+
+    return {
+      code: 'server_error',
+      message: 'Something wrong with sending',
+    }
+  }
 }
 
 export const requestChangePasswordEmail = async (
   model: ForgotPasswordModel
-): Promise<{ type: 'success' | 'error' }> => {
+): Promise<AuthError | { message: 'ok' }> => {
   try {
     await auth0.requestChangePasswordEmail({
       email: model.email,
       connection: 'Username-Password-Authentication',
     })
-    return { type: 'success' }
+    return { message: 'ok' }
   } catch (error) {
     console.error(error)
-    return { type: 'error' }
+    return {
+      message: 'Something wrong with sending',
+      code: 'server_error',
+    }
   }
 }
-
-const Auth0Error = t.type({
-  name: t.string,
-  message: t.type({
-    error: t.string,
-    error_description: t.string,
-  }),
-})
