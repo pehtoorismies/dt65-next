@@ -3,7 +3,7 @@ import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
 import { Register } from './components/register'
-import { apiForgotPassword } from './api-client/api-forgot-password'
+import { apiRegister } from './api-client/api-register'
 
 import type { NextPage } from 'next'
 import type { RegisterModel } from '#domain/auth'
@@ -14,10 +14,10 @@ export const RegisterPageContainer: NextPage = () => {
 
   const onSubmit = async (values: RegisterModel) => {
     setSubmitting(true)
-    const result = await apiForgotPassword.login(values)()
+    const result = await apiRegister(values)()
 
     if (E.isRight(result)) {
-      // write to local storage
+      // redirect to somewhere
     } else {
       const { message } = result.left
       setFieldError(message)

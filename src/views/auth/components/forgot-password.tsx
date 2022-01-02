@@ -12,12 +12,6 @@ import type { ForgotPasswordModel } from '#domain/auth'
 
 const INITIAL_VALUES: ForgotPasswordModel = { email: '' }
 
-const validate = (values: ForgotPasswordModel) => {
-  const errors: Partial<ForgotPasswordModel> = {}
-  errors.email = validateEmail(values.email)
-  return errors
-}
-
 export interface ForgotPasswordProps {
   generalError?: string
   isSubmitting: boolean
@@ -32,7 +26,6 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
   const formik = useFormik<ForgotPasswordModel>({
     initialValues: INITIAL_VALUES,
     onSubmit,
-    validate,
   })
 
   return (
@@ -46,6 +39,7 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
           onChange={formik.handleChange}
           value={formik.values.email}
           error={formik.errors.email}
+          validate={validateEmail}
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">
