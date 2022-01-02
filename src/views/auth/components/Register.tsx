@@ -21,10 +21,13 @@ const validate = ({
 }: RegisterModel): Partial<RegisterModel> => {
   return createErrorObject([
     ['email', validateEmail(email)],
-    ['name', isRequired(name)],
-    ['nick', isRequired(nick)],
+    ['name', isRequired(name, 'Nimi')],
+    ['nick', isRequired(nick, 'Käyttäjätunnus/nick')],
     ['password', validatePassword(password)],
-    ['registerSecretCode', isRequired(registerSecretCode)],
+    [
+      'registerSecretCode',
+      isRequired(registerSecretCode, 'Rekisteröintitunnus'),
+    ],
   ])
 }
 
