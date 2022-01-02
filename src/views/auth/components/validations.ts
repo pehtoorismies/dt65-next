@@ -1,7 +1,7 @@
 export const validateEmail = (value: string) => {
   let error
   if (!value) {
-    error = 'Pakollinen'
+    error = 'Sähköposti on pakollinen'
   } else if (!/^[\w%+.-]+@[\d.a-z-]+\.[a-z]{2,4}$/i.test(value)) {
     error = 'Sähköposti väärän muotoinen'
   }
@@ -11,17 +11,17 @@ export const validateEmail = (value: string) => {
 export const validatePassword = (value: string) => {
   let error
   if (!value) {
-    error = 'Pakollinen'
+    error = 'Salasana on pakollinen'
   } else if (value.length < 6) {
-    error = 'Liian lyhyt'
+    error = 'Salasana on liian lyhyt'
   }
   return error
 }
 
-export const isRequired = (value: string) => {
+export const isRequired = (value: string, fieldName: string) => {
   let error
   if (!value) {
-    error = 'Pakollinen'
+    error = `${fieldName} on pakollinen`
   }
   return error
 }
