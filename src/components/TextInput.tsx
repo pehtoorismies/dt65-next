@@ -8,6 +8,7 @@ interface Props {
   onChange: (event: ChangeEvent<unknown>) => void
   value: string
   error?: string
+  autoComplete?: 'on' | 'off' | 'email' | 'current-password' | 'new-password'
 }
 
 export const TextInput: VFC<Props> = (props) => {
