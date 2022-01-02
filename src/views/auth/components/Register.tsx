@@ -7,7 +7,12 @@ import { Button } from '#components/button/Button'
 import { createErrorObject } from '#views/auth/components/create-error-object'
 
 import { AuthTemplate } from './AuthTemplate'
-import { isRequired, validateEmail, validatePassword } from './validations'
+import {
+  isRequired,
+  validateEmail,
+  validateName,
+  validatePassword,
+} from './validations'
 
 import type { RegisterModel } from '#domain/auth'
 import type { VFC } from 'react'
@@ -21,7 +26,7 @@ const validate = ({
 }: RegisterModel): Partial<RegisterModel> => {
   return createErrorObject([
     ['email', validateEmail(email)],
-    ['name', isRequired(name, 'Nimi')],
+    ['name', validateName(name)],
     ['nick', isRequired(nick, 'Käyttäjätunnus/nick')],
     ['password', validatePassword(password)],
     [
