@@ -18,6 +18,14 @@ export const validatePassword = (value: string) => {
   return error
 }
 
+export const validateName = (value: string) => {
+  let error
+  if (value.length < 8) {
+    error = `Nimi on virheellinen. Anna esim. Simo Salminen.`
+  }
+  return error
+}
+
 export const isRequired = (value: string, fieldName: string) => {
   let error
   if (!value) {
