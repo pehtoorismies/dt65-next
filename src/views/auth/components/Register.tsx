@@ -113,6 +113,7 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.name}
           error={errors.name}
+          autoComplete="name"
         />
 
         <TextInput
