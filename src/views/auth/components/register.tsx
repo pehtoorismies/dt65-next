@@ -19,57 +19,65 @@ const INITIAL_VALUES: RegisterModel = {
   name: '',
 }
 
-const validate = (values: RegisterModel) => {
-  const errors: Partial<RegisterModel> = {}
-  errors.email = validateEmail(values.email)
-  errors.password = validatePassword(values.password)
-  errors.nick = isRequired(values.nick)
-  errors.registerSecretCode = isRequired(values.registerSecretCode)
-  errors.name = isRequired(values.name)
-  return errors
-}
-
 export interface RegisterProps {
+  onSubmit: (values: RegisterModel) => void
+  fieldError?: string
   generalError?: string
   isSubmitting: boolean
-  onSubmit: (values: RegisterModel) => void
 }
 
 export const Register: VFC<RegisterProps> = ({
   onSubmit,
+  fieldError,
   generalError,
   isSubmitting,
 }) => {
   const formik = useFormik<RegisterModel>({
     initialValues: INITIAL_VALUES,
     onSubmit,
-    validate,
   })
 
+  const {
+    setSubmitting,
+    setErrors,
+    handleSubmit,
+    values,
+    errors,
+    handleChange,
+  } = formik
+
   useEffect(() => {
-    formik.setSubmitting(isSubmitting)
-  }, [isSubmitting, formik])
+    setSubmitting(isSubmitting)
+    if (fieldError) {
+      setErrors({
+        email: fieldError,
+        password: fieldError,
+      })
+    }
+  }, [fieldError, isSubmitting, setSubmitting, setErrors])
 
   return (
     <AuthTemplate title="Rekisteröidy" generalError={generalError}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TextInput
           id="email"
           name="email"
           type="email"
           placeholder="Sähköpostiosoite*"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          error={formik.errors.email}
+          onChange={handleChange}
+          value={values.email}
+          error={errors.email}
+          validate={validateEmail}
         />
         <TextInput
           id="nick"
           name="nick"
           type="text"
           placeholder="Käyttäjätunnus / Nick*"
-          onChange={formik.handleChange}
-          value={formik.values.nick}
-          error={formik.errors.nick}
+          onChange={handleChange}
+          value={values.nick}
+          error={errors.nick}
+          validate={isRequired}
         />
 
         <TextInput
@@ -77,9 +85,10 @@ export const Register: VFC<RegisterProps> = ({
           name="name"
           type="text"
           placeholder="Etunimi Sukunimi*"
-          onChange={formik.handleChange}
-          value={formik.values.name}
-          error={formik.errors.name}
+          onChange={handleChange}
+          value={values.name}
+          error={errors.name}
+          validate={isRequired}
         />
 
         <TextInput
@@ -87,9 +96,10 @@ export const Register: VFC<RegisterProps> = ({
           name="password"
           type="password"
           placeholder="Salasana*"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          error={formik.errors.password}
+          onChange={handleChange}
+          value={values.password}
+          error={errors.password}
+          validate={validatePassword}
         />
 
         <TextInput
@@ -97,9 +107,10 @@ export const Register: VFC<RegisterProps> = ({
           name="registerSecretCode"
           type="text"
           placeholder="Saamasi rekisteröintitunnus*"
-          onChange={formik.handleChange}
-          value={formik.values.registerSecretCode}
-          error={formik.errors.registerSecretCode}
+          onChange={handleChange}
+          value={values.registerSecretCode}
+          error={errors.registerSecretCode}
+          validate={isRequired}
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">

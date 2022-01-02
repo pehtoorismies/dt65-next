@@ -20,13 +20,6 @@ export interface LoginProps {
   isSubmitting: boolean
 }
 
-const validate = (values: LoginModel) => {
-  const errors: Partial<LoginModel> = {}
-  errors.email = validateEmail(values.email)
-  errors.password = validatePassword(values.email)
-  return errors
-}
-
 export const Login: VFC<LoginProps> = ({
   onSubmit,
   fieldError,
@@ -36,38 +29,49 @@ export const Login: VFC<LoginProps> = ({
   const formik = useFormik<LoginModel>({
     initialValues: INITIAL_VALUES,
     onSubmit,
-    validate,
   })
+
+  const {
+    setSubmitting,
+    setErrors,
+    handleSubmit,
+    values,
+    errors,
+    handleChange,
+  } = formik
+
   useEffect(() => {
-    formik.setSubmitting(isSubmitting)
+    setSubmitting(isSubmitting)
     if (fieldError) {
-      formik.setErrors({
+      setErrors({
         email: fieldError,
         password: fieldError,
       })
     }
-  }, [fieldError, isSubmitting, formik])
+  }, [fieldError, isSubmitting, setSubmitting, setErrors])
 
   return (
     <AuthTemplate title="Kirjaudu" generalError={generalError}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <TextInput
           id="email"
           name="email"
           type="email"
           placeholder="Sähköpostiosoite*"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          error={formik.errors.email}
+          onChange={handleChange}
+          value={values.email}
+          error={errors.email}
+          validate={validateEmail}
         />
         <TextInput
           id="password"
           name="password"
           type="password"
           placeholder="Salasana*"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          error={formik.errors.password}
+          onChange={handleChange}
+          value={values.password}
+          error={errors.password}
+          validate={validatePassword}
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">
