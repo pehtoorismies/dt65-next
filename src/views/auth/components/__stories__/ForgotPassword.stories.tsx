@@ -1,4 +1,4 @@
-import { ForgotPassword, ForgotPasswordProps } from '../forgot-password'
+import { ForgotPassword, ForgotPasswordProps } from '../ForgotPassword'
 
 import type { Meta, Story } from '@storybook/react'
 

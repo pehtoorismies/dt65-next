@@ -2,8 +2,8 @@ import './base.css'
 
 import { none } from 'fp-ts/Option'
 
-import { UserContextProvider } from '#context/user-context'
-import { Layout } from '#components/layout/layout'
+import { UserContextProvider } from '#context/UserContext'
+import { Layout } from '#components/layout/Layout'
 
 import type { AppProps } from 'next/app'
 

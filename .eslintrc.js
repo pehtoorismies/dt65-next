@@ -38,5 +38,12 @@ module.exports = {
         },
       },
     ],
+    'unicorn/filename-case': [
+      'error',
+      {
+        case: 'pascalCase',
+        ignore: ['.ts$', 'stories.tsx$', '^_\\D+.tsx$'],
+      },
+    ],
   },
 }

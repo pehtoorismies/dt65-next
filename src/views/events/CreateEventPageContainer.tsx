@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import type { NextPage } from 'next'
 
-const CreateEvent: NextPage = () => {
+export const CreateEventPageContainer: NextPage = () => {
   return (
     <div>
       <Head>
@@ -12,5 +12,3 @@ const CreateEvent: NextPage = () => {
     </div>
   )
 }
-
-export default CreateEvent

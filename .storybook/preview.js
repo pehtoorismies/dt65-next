@@ -1,5 +1,5 @@
 import '../src/pages/base.css'
-import { UserContextProvider } from '../src/context/user-context'
+import { UserContextProvider } from '../src/context/UserContext'
 import { none, some } from 'fp-ts/Option'
 
 const USER_MAP = {
