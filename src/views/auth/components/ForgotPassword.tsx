@@ -47,6 +47,7 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
           onChange={formik.handleChange}
           value={formik.values.email}
           error={formik.errors.email}
+          autoComplete="email"
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">

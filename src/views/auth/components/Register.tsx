@@ -85,6 +85,7 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.email}
           error={errors.email}
+          autoComplete="email"
         />
         <TextInput
           id="nick"
@@ -114,6 +115,7 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.password}
           error={errors.password}
+          autoComplete="new-password"
         />
 
         <TextInput

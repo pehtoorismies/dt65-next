@@ -70,6 +70,7 @@ export const Login: VFC<LoginProps> = ({
           onChange={handleChange}
           value={values.email}
           error={errors.email}
+          autoComplete="email"
         />
         <TextInput
           id="password"
@@ -79,6 +80,7 @@ export const Login: VFC<LoginProps> = ({
           onChange={handleChange}
           value={values.password}
           error={errors.password}
+          autoComplete="current-password"
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">
