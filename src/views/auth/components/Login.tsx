@@ -4,12 +4,20 @@ import { useEffect } from 'react'
 import { TextInput } from '#components/TextInput'
 import { Button } from '#components/button/Button'
 import { Link } from '#components/Link'
+import { createErrorObject } from '#views/auth/components/create-error-object'
 
 import { AuthTemplate } from './AuthTemplate'
 import { validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
 import type { LoginModel } from '#domain/auth'
+
+const validate = ({ email, password }: LoginModel): Partial<LoginModel> => {
+  return createErrorObject([
+    ['email', validateEmail(email)],
+    ['password', validatePassword(password)],
+  ])
+}
 
 const INITIAL_VALUES: LoginModel = { email: '', password: '' }
 
@@ -29,6 +37,7 @@ export const Login: VFC<LoginProps> = ({
   const formik = useFormik<LoginModel>({
     initialValues: INITIAL_VALUES,
     onSubmit,
+    validate,
   })
 
   const {
@@ -61,7 +70,6 @@ export const Login: VFC<LoginProps> = ({
           onChange={handleChange}
           value={values.email}
           error={errors.email}
-          validate={validateEmail}
         />
         <TextInput
           id="password"
@@ -71,7 +79,6 @@ export const Login: VFC<LoginProps> = ({
           onChange={handleChange}
           value={values.password}
           error={errors.password}
-          validate={validatePassword}
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">

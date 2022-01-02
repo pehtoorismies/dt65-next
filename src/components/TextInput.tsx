@@ -8,7 +8,6 @@ interface Props {
   onChange: (event: ChangeEvent<unknown>) => void
   value: string
   error?: string
-  validate?: (value: any) => undefined | string | Promise<any>
 }
 
 export const TextInput: VFC<Props> = (props) => {
