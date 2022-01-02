@@ -1,4 +1,4 @@
-import { LoadingIcon } from './loading'
+import { LoadingIcon } from './LoadingIcon'
 
 import type { FC } from 'react'
 

@@ -1,4 +1,4 @@
-import { Register, RegisterProps } from '../register'
+import { Register, RegisterProps } from '../Register'
 
 import type { Meta, Story } from '@storybook/react'
 

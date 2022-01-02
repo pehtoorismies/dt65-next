@@ -2,8 +2,8 @@ import { HomeIcon, PlusIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
 import NextLink from 'next/link'
 import { toNullable } from 'fp-ts/Option'
 
-import { useUserContext } from '#context/user-context'
-import { Link } from '#components/link'
+import { useUserContext } from '#context/UserContext'
+import { Link } from '#components/Link'
 
 import type { FC, VFC } from 'react'
 import type { User } from '#domain/user'

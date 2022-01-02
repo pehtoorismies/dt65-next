@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import type { NextPage } from 'next'
 
-const Home: NextPage = () => {
+export const EventListPageContainer: NextPage = () => {
   return (
     <div>
       <Head>
@@ -39,5 +39,3 @@ const Home: NextPage = () => {
     </div>
   )
 }
-
-export default Home

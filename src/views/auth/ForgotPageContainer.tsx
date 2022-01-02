@@ -3,7 +3,7 @@ import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { ForgotPassword } from './components/forgot-password'
+import { ForgotPassword } from './components/ForgotPassword'
 import { apiForgotPassword } from './api-client/api-forgot-password'
 
 import type { NextPage } from 'next'

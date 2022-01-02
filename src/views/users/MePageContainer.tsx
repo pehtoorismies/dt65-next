@@ -2,14 +2,14 @@ import Head from 'next/head'
 
 import type { NextPage } from 'next'
 
-const Users: NextPage = () => {
+export const MePageContainer: NextPage = () => {
   return (
     <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      users
+
       <footer className="flex items-center justify-center w-full h-24 border-t">
         <a
           className="flex items-center justify-center"
@@ -24,5 +24,3 @@ const Users: NextPage = () => {
     </div>
   )
 }
-
-export default Users

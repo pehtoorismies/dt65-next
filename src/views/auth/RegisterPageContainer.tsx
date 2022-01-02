@@ -2,7 +2,7 @@ import Head from 'next/head'
 import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
-import { Register } from './components/register'
+import { Register } from './components/Register'
 import { apiRegister } from './api-client/api-register'
 
 import type { NextPage } from 'next'

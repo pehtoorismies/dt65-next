@@ -1,11 +1,11 @@
 import { useFormik } from 'formik'
 import { useEffect } from 'react'
 
-import { TextInput } from '#components/text-input'
-import { Link } from '#components/link'
-import { Button } from '#components/button/button'
+import { TextInput } from '#components/TextInput'
+import { Link } from '#components/Link'
+import { Button } from '#components/button/Button'
 
-import { AuthTemplate } from './auth-template'
+import { AuthTemplate } from './AuthTemplate'
 import { isRequired, validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'

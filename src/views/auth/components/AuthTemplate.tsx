@@ -1,4 +1,4 @@
-import { AlertBox } from './alert-box'
+import { AlertBox } from './AlertBox'
 
 import type { FC } from 'react'
 

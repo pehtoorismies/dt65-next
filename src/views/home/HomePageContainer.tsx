@@ -2,7 +2,7 @@ import { fold } from 'fp-ts/Option'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { useUserContext } from '#context/user-context'
+import { useUserContext } from '#context/UserContext'
 
 import type { NextPage } from 'next'
 

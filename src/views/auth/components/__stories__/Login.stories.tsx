@@ -1,4 +1,4 @@
-import { Login, LoginProps } from '../login'
+import { Login, LoginProps } from '../Login'
 
 import type { Meta, Story } from '@storybook/react'
 

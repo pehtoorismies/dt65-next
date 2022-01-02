@@ -1,10 +1,10 @@
 import { useFormik } from 'formik'
 
-import { TextInput } from '#components/text-input'
-import { Button } from '#components/button/button'
-import { Link } from '#components/link'
+import { TextInput } from '#components/TextInput'
+import { Button } from '#components/button/Button'
+import { Link } from '#components/Link'
 
-import { AuthTemplate } from './auth-template'
+import { AuthTemplate } from './AuthTemplate'
 import { validateEmail } from './validations'
 
 import type { VFC } from 'react'
