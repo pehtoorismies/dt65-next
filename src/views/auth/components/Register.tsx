@@ -4,12 +4,29 @@ import { useEffect } from 'react'
 import { TextInput } from '#components/TextInput'
 import { Link } from '#components/Link'
 import { Button } from '#components/button/Button'
+import { createErrorObject } from '#views/auth/components/create-error-object'
 
 import { AuthTemplate } from './AuthTemplate'
 import { isRequired, validateEmail, validatePassword } from './validations'
 
-import type { VFC } from 'react'
 import type { RegisterModel } from '#domain/auth'
+import type { VFC } from 'react'
+
+const validate = ({
+  email,
+  name,
+  nick,
+  password,
+  registerSecretCode,
+}: RegisterModel): Partial<RegisterModel> => {
+  return createErrorObject([
+    ['email', validateEmail(email)],
+    ['name', isRequired(name)],
+    ['nick', isRequired(nick)],
+    ['password', validatePassword(password)],
+    ['registerSecretCode', isRequired(registerSecretCode)],
+  ])
+}
 
 const INITIAL_VALUES: RegisterModel = {
   email: '',
@@ -35,6 +52,7 @@ export const Register: VFC<RegisterProps> = ({
   const formik = useFormik<RegisterModel>({
     initialValues: INITIAL_VALUES,
     onSubmit,
+    validate,
   })
 
   const {
@@ -67,7 +85,6 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.email}
           error={errors.email}
-          validate={validateEmail}
         />
         <TextInput
           id="nick"
@@ -77,7 +94,6 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.nick}
           error={errors.nick}
-          validate={isRequired}
         />
 
         <TextInput
@@ -88,7 +104,6 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.name}
           error={errors.name}
-          validate={isRequired}
         />
 
         <TextInput
@@ -99,7 +114,6 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.password}
           error={errors.password}
-          validate={validatePassword}
         />
 
         <TextInput
@@ -110,7 +124,6 @@ export const Register: VFC<RegisterProps> = ({
           onChange={handleChange}
           value={values.registerSecretCode}
           error={errors.registerSecretCode}
-          validate={isRequired}
         />
         <div className="p-1">
           <Button isLoading={isSubmitting} type="submit" className="w-full">
