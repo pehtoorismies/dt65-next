@@ -1,1 +1,1 @@
-export { ListUsersPageContainer as default } from '#views/users/ListUsersPageContainer'
+export { ListUsersPage as default } from '#views/users/ListUsersPage'

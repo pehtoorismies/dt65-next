@@ -1,1 +1,1 @@
-export { ForgotPasswordPageContainer as default } from '#views/auth/ForgotPageContainer'
+export { ForgotPasswordPage as default } from '#views/auth/ForgotPasswordPage'
