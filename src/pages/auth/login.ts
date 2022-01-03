@@ -1,1 +1,1 @@
-export { LoginPageContainer as default } from '#views/auth/LoginPageContainer'
+export { LoginPage as default } from '#views/auth/LoginPage'

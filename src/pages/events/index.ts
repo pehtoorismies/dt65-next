@@ -1,1 +1,1 @@
-export { EventListPageContainer as default } from '#views/events/EventListPageContainer'
+export { EventListPage as default } from '#views/events/EventListPage'

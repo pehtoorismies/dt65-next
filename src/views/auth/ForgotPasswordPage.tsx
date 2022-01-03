@@ -9,7 +9,7 @@ import { apiForgotPassword } from './api-client/api-forgot-password'
 import type { NextPage } from 'next'
 import type { ForgotPasswordModel } from '#domain/auth'
 
-export const ForgotPasswordPageContainer: NextPage = () => {
+export const ForgotPasswordPage: NextPage = () => {
   const router = useRouter()
   const [isSubmitting, setSubmitting] = useState(false)
   const [generalError, setGeneralError] = useState('')

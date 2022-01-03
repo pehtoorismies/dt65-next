@@ -1,1 +1,1 @@
-export { RegisterPageContainer as default } from '#views/auth/RegisterPageContainer'
+export { RegisterPage as default } from '#views/auth/RegisterPage'

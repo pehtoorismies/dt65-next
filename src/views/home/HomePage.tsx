@@ -6,7 +6,7 @@ import { useUserContext } from '#context/UserContext'
 
 import type { NextPage } from 'next'
 
-export const HomePageContainer: NextPage = () => {
+export const HomePage: NextPage = () => {
   const { user } = useUserContext()
   const router = useRouter()
 

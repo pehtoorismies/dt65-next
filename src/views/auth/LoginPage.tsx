@@ -2,22 +2,23 @@ import Head from 'next/head'
 import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
-import { Register } from './components/Register'
-import { apiRegister } from './api-client/api-register'
+import { Login } from './components/Login'
+import { apiLogin } from './api-client/api-login'
 
 import type { NextPage } from 'next'
-import type { RegisterModel } from '#domain/auth'
+import type { LoginModel } from '#domain/auth'
 
-export const RegisterPageContainer: NextPage = () => {
+export const LoginPage: NextPage = () => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [fieldError, setFieldError] = useState('')
 
-  const onSubmit = async (values: RegisterModel) => {
+  const onSubmit = async (values: LoginModel) => {
     setSubmitting(true)
-    const result = await apiRegister(values)()
+    const login = apiLogin(values)
+    const result = await login()
 
     if (E.isRight(result)) {
-      // redirect to somewhere
+      // write to local storage
     } else {
       const { message } = result.left
       setFieldError(message)
@@ -32,7 +33,7 @@ export const RegisterPageContainer: NextPage = () => {
         <title>DT65 - Kirjaudu</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Register
+      <Login
         onSubmit={onSubmit}
         isSubmitting={isSubmitting}
         fieldError={fieldError}
