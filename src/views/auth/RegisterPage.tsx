@@ -3,7 +3,7 @@ import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
 import { Register } from './components/Register'
-import { apiRegister } from './api-client/api-register'
+import { authService } from './services/auth-service'
 
 import type { NextPage } from 'next'
 import type { RegisterModel } from '#domain/auth'
@@ -12,9 +12,10 @@ export const RegisterPage: NextPage = () => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [fieldError, setFieldError] = useState('')
 
-  const onSubmit = async (values: RegisterModel) => {
+  const onSubmit = async (model: RegisterModel) => {
     setSubmitting(true)
-    const result = await apiRegister(values)()
+    const register = authService.registerTask(model)
+    const result = await register()
 
     if (E.isRight(result)) {
       // redirect to somewhere

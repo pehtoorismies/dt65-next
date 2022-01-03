@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/Either'
 
-import { apiLogin } from '../api-login'
+import { authService } from '../auth-service'
 
 const mockFetchLoginSuccess = async (url: string) => {
   switch (url) {
@@ -41,7 +41,10 @@ const mockFetchLoginError = async (url: string) => {
 describe('Api login', () => {
   it('login success', async () => {
     window.fetch = jest.fn().mockImplementation(mockFetchLoginSuccess)
-    const login = apiLogin({ password: '123', email: 'some@email.com' })
+    const login = authService.loginTask({
+      password: '123',
+      email: 'some@email.com',
+    })
     const response = await login()
 
     if (E.isLeft(response)) {
@@ -53,7 +56,10 @@ describe('Api login', () => {
 
   it('login error', async () => {
     window.fetch = jest.fn().mockImplementation(mockFetchLoginError)
-    const login = apiLogin({ password: '123', email: 'some@email.com' })
+    const login = authService.loginTask({
+      password: '123',
+      email: 'some@email.com',
+    })
     const response = await login()
 
     if (E.isRight(response)) {
