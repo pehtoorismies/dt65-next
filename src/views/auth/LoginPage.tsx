@@ -3,7 +3,7 @@ import * as E from 'fp-ts/Either'
 import { useState } from 'react'
 
 import { Login } from './components/Login'
-import { apiLogin } from './api-client/api-login'
+import { authService } from './services/auth-service'
 
 import type { NextPage } from 'next'
 import type { LoginModel } from '#domain/auth'
@@ -14,7 +14,7 @@ export const LoginPage: NextPage = () => {
 
   const onSubmit = async (values: LoginModel) => {
     setSubmitting(true)
-    const login = apiLogin(values)
+    const login = authService.loginTask(values)
     const result = await login()
 
     if (E.isRight(result)) {

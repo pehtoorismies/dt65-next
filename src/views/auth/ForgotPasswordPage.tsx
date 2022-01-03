@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { ForgotPassword } from './components/ForgotPassword'
-import { apiForgotPassword } from './api-client/api-forgot-password'
+import { authService } from './services/auth-service'
 
 import type { NextPage } from 'next'
 import type { ForgotPasswordModel } from '#domain/auth'
@@ -16,7 +16,7 @@ export const ForgotPasswordPage: NextPage = () => {
 
   const onSubmit = async (model: ForgotPasswordModel) => {
     setSubmitting(true)
-    const forgotPassword = apiForgotPassword(model)
+    const forgotPassword = authService.forgotPasswordTask(model)
     const result = await forgotPassword()
 
     if (E.isRight(result)) {
