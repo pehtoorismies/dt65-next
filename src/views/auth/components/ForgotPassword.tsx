@@ -9,20 +9,20 @@ import { AuthTemplate } from './AuthTemplate'
 import { validateEmail } from './validations'
 
 import type { VFC } from 'react'
-import type { ForgotPasswordModel } from '#domain/auth'
+import type { ForgotPasswordModelC } from '#domain/auth'
 
 const validate = ({
   email,
-}: ForgotPasswordModel): Partial<ForgotPasswordModel> => {
+}: ForgotPasswordModelC): Partial<ForgotPasswordModelC> => {
   return createErrorObject([['email', validateEmail(email)]])
 }
 
-const INITIAL_VALUES: ForgotPasswordModel = { email: '' }
+const INITIAL_VALUES: ForgotPasswordModelC = { email: '' }
 
 export interface ForgotPasswordProps {
   generalError?: string
   isSubmitting: boolean
-  onSubmit: (values: ForgotPasswordModel) => void
+  onSubmit: (values: ForgotPasswordModelC) => void
 }
 
 export const ForgotPassword: VFC<ForgotPasswordProps> = ({
@@ -30,7 +30,7 @@ export const ForgotPassword: VFC<ForgotPasswordProps> = ({
   generalError,
   isSubmitting,
 }) => {
-  const formik = useFormik<ForgotPasswordModel>({
+  const formik = useFormik<ForgotPasswordModelC>({
     initialValues: INITIAL_VALUES,
     onSubmit,
     validate,

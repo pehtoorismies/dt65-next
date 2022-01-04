@@ -4,14 +4,15 @@ import { AuthenticationClient, ManagementClient } from 'auth0'
 
 import { getAuthConfig } from '#config/config'
 
-import type { TokenResponse } from 'auth0'
 import type {
-  AuthData,
-  AuthError,
-  ForgotPasswordModel,
-  LoginModel,
-  RegisterModel,
+  ForgotPasswordModelC,
+  LoginModelC,
+  RegisterModelC,
+  ForgotPasswordResponseC,
+  LoginResponseC,
+  RegisterResponseC,
 } from '#domain/auth'
+import type { TokenResponse } from 'auth0'
 
 const Auth0Error = t.type({
   name: t.string,
@@ -37,8 +38,8 @@ const getAuth0Management = async (): Promise<ManagementClient> => {
 }
 
 export const loginAuth0User = async (
-  model: LoginModel
-): Promise<AuthError | AuthData> => {
+  model: LoginModelC
+): Promise<LoginResponseC> => {
   try {
     const authZeroUser: TokenResponse = await auth0.passwordGrant({
       password: model.password,
@@ -49,6 +50,7 @@ export const loginAuth0User = async (
     })
 
     return {
+      type: 'success',
       accessToken: authZeroUser.access_token,
       idToken: authZeroUser.id_token || '',
       expiresIn: '0',
@@ -62,6 +64,7 @@ export const loginAuth0User = async (
 
       if (isRight(authError)) {
         return {
+          type: 'error',
           code: authError.right.message.error,
           message: authError.right.message.error_description,
         }
@@ -69,6 +72,7 @@ export const loginAuth0User = async (
     }
 
     return {
+      type: 'error',
       code: 'unexpect_error',
       message: 'Unknown error occurred',
     }
@@ -76,8 +80,8 @@ export const loginAuth0User = async (
 }
 
 export const createAuth0User = async (
-  model: RegisterModel
-): Promise<AuthError | { message: 'ok' }> => {
+  model: RegisterModelC
+): Promise<RegisterResponseC> => {
   const management = await getAuth0Management()
 
   try {
@@ -96,16 +100,18 @@ export const createAuth0User = async (
       app_metadata: { role: 'USER' },
     })
 
-    return { message: 'ok' }
+    return { message: 'ok', type: 'success' }
   } catch (error) {
     if (error instanceof Error) {
       return {
+        type: 'error',
         code: error.name,
         message: error.message,
       }
     }
 
     return {
+      type: 'error',
       code: 'server_error',
       message: 'Something wrong with sending',
     }
@@ -113,19 +119,21 @@ export const createAuth0User = async (
 }
 
 export const requestChangePasswordEmail = async (
-  model: ForgotPasswordModel
-): Promise<AuthError | { message: 'ok' }> => {
+  model: ForgotPasswordModelC
+): Promise<ForgotPasswordResponseC> => {
   try {
     await auth0.requestChangePasswordEmail({
       email: model.email,
       connection: 'Username-Password-Authentication',
     })
-    return { message: 'ok' }
-  } catch (error) {
+    return { message: 'ok', type: 'success' }
+  } catch (error: unknown) {
+    // Send to Sentry
     console.error(error)
     return {
+      type: 'error',
       message: 'Something wrong with sending',
-      code: 'server_error',
+      code: 'auth0_error',
     }
   }
 }

@@ -2,7 +2,7 @@ import * as t from 'io-ts'
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/function'
 
-export const decodeError = (errors: t.Errors): AuthError => {
+export const decodeError = (errors: t.Errors): AuthFailure => {
   const missingKeys = errors.map((error) =>
     error.context.map(({ key }) => key).join('.')
   )
@@ -18,34 +18,62 @@ export const AuthData = t.type({
   expiresIn: t.string,
 })
 
-export const AuthError = t.type({
+export const AuthFailure = t.type({
   message: t.string,
   code: t.string,
 })
 
 export type AuthData = t.TypeOf<typeof AuthData>
-export type AuthError = t.TypeOf<typeof AuthError>
+export type AuthFailure = t.TypeOf<typeof AuthFailure>
 
-export const isAuthData = (auth: AuthData | AuthError): auth is AuthData => {
+const AuthDataResponse = t.intersection([
+  AuthData,
+  t.type({ type: t.literal('success') }),
+])
+
+const AuthFailureResponse = t.intersection([
+  AuthFailure,
+  t.type({ type: t.literal('error') }),
+])
+
+const AuthOkResponse = t.intersection([
+  t.type({ message: t.literal('ok') }),
+  t.type({ type: t.literal('success') }),
+])
+export type AuthOkResponseC = t.TypeOf<typeof AuthOkResponse>
+
+export const LoginResponse = t.union([AuthDataResponse, AuthFailureResponse])
+export type LoginResponseC = t.TypeOf<typeof LoginResponse>
+
+export const ForgotPasswordResponse = t.union([
+  AuthOkResponse,
+  AuthFailureResponse,
+])
+export type ForgotPasswordResponseC = t.TypeOf<typeof ForgotPasswordResponse>
+
+export const RegisterResponse = t.union([AuthOkResponse, AuthFailureResponse])
+export type RegisterResponseC = t.TypeOf<typeof RegisterResponse>
+
+export const isAuthData = (auth: AuthData | AuthFailure): auth is AuthData => {
   return (auth as AuthData).idToken !== undefined
 }
 
 export const validateAuthError = (
   res: unknown
-): TE.TaskEither<AuthError, AuthError> => {
-  return pipe(res, AuthError.decode, TE.fromEither, TE.mapLeft(decodeError))
+): TE.TaskEither<AuthFailure, AuthFailure> => {
+  return pipe(res, AuthFailure.decode, TE.fromEither, TE.mapLeft(decodeError))
 }
 
 export const LoginModel = t.type({
   email: t.string,
   password: t.string,
 })
-export type LoginModel = t.TypeOf<typeof LoginModel>
+export type LoginModelC = t.TypeOf<typeof LoginModel>
 
 export const ForgotPasswordModel = t.type({
   email: t.string,
 })
-export type ForgotPasswordModel = t.TypeOf<typeof ForgotPasswordModel>
+export type ForgotPasswordModelC = t.TypeOf<typeof ForgotPasswordModel>
 
 export const RegisterModel = t.type({
   email: t.string,
@@ -54,4 +82,4 @@ export const RegisterModel = t.type({
   password: t.string,
   registerSecretCode: t.string,
 })
-export type RegisterModel = t.TypeOf<typeof RegisterModel>
+export type RegisterModelC = t.TypeOf<typeof RegisterModel>

@@ -14,7 +14,7 @@ import {
   validatePassword,
 } from './validations'
 
-import type { RegisterModel } from '#domain/auth'
+import type { RegisterModelC } from '#domain/auth'
 import type { VFC } from 'react'
 
 const validate = ({
@@ -23,7 +23,7 @@ const validate = ({
   nick,
   password,
   registerSecretCode,
-}: RegisterModel): Partial<RegisterModel> => {
+}: RegisterModelC): Partial<RegisterModelC> => {
   return createErrorObject([
     ['email', validateEmail(email)],
     ['name', validateName(name)],
@@ -36,7 +36,7 @@ const validate = ({
   ])
 }
 
-const INITIAL_VALUES: RegisterModel = {
+const INITIAL_VALUES: RegisterModelC = {
   email: '',
   password: '',
   nick: '',
@@ -45,7 +45,7 @@ const INITIAL_VALUES: RegisterModel = {
 }
 
 export interface RegisterProps {
-  onSubmit: (values: RegisterModel) => void
+  onSubmit: (values: RegisterModelC) => void
   fieldError?: string
   generalError?: string
   isSubmitting: boolean
@@ -57,7 +57,7 @@ export const Register: VFC<RegisterProps> = ({
   generalError,
   isSubmitting,
 }) => {
-  const formik = useFormik<RegisterModel>({
+  const formik = useFormik<RegisterModelC>({
     initialValues: INITIAL_VALUES,
     onSubmit,
     validate,

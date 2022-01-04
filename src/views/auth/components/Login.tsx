@@ -10,19 +10,19 @@ import { AuthTemplate } from './AuthTemplate'
 import { validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
-import type { LoginModel } from '#domain/auth'
+import type { LoginModelC } from '#domain/auth'
 
-const validate = ({ email, password }: LoginModel): Partial<LoginModel> => {
+const validate = ({ email, password }: LoginModelC): Partial<LoginModelC> => {
   return createErrorObject([
     ['email', validateEmail(email)],
     ['password', validatePassword(password)],
   ])
 }
 
-const INITIAL_VALUES: LoginModel = { email: '', password: '' }
+const INITIAL_VALUES: LoginModelC = { email: '', password: '' }
 
 export interface LoginProps {
-  onSubmit: (values: LoginModel) => void
+  onSubmit: (values: LoginModelC) => void
   fieldError?: string
   generalError?: string
   isSubmitting: boolean
@@ -34,7 +34,7 @@ export const Login: VFC<LoginProps> = ({
   generalError,
   isSubmitting,
 }) => {
-  const formik = useFormik<LoginModel>({
+  const formik = useFormik<LoginModelC>({
     initialValues: INITIAL_VALUES,
     onSubmit,
     validate,
