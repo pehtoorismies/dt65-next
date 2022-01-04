@@ -6,13 +6,13 @@ import { Login } from './components/Login'
 import { authService } from './services/auth-service'
 
 import type { NextPage } from 'next'
-import type { LoginModel } from '#domain/auth'
+import type { LoginModelC } from '#domain/auth'
 
 export const LoginPage: NextPage = () => {
   const [isSubmitting, setSubmitting] = useState(false)
   const [fieldError, setFieldError] = useState('')
 
-  const onSubmit = async (values: LoginModel) => {
+  const onSubmit = async (values: LoginModelC) => {
     setSubmitting(true)
     const login = authService.loginTask(values)
     const result = await login()

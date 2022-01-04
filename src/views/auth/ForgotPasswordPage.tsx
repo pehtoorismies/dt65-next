@@ -7,25 +7,32 @@ import { ForgotPassword } from './components/ForgotPassword'
 import { authService } from './services/auth-service'
 
 import type { NextPage } from 'next'
-import type { ForgotPasswordModel } from '#domain/auth'
+import type { ForgotPasswordModelC } from '#domain/auth'
 
 export const ForgotPasswordPage: NextPage = () => {
   const router = useRouter()
   const [isSubmitting, setSubmitting] = useState(false)
   const [generalError, setGeneralError] = useState('')
 
-  const onSubmit = async (model: ForgotPasswordModel) => {
+  const onSubmit = async (model: ForgotPasswordModelC) => {
     setSubmitting(true)
     const forgotPassword = authService.forgotPasswordTask(model)
     const result = await forgotPassword()
 
+    setSubmitting(false)
+
     if (E.isRight(result)) {
-      await router.push('/login')
+      switch (result.right.type) {
+        case 'success': {
+          return await router.push('/login')
+        }
+        case 'error': {
+          return setGeneralError(result.right.message)
+        }
+      }
     } else {
       setGeneralError(result.left.message)
     }
-
-    setSubmitting(false)
   }
 
   return (

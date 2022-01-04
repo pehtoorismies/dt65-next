@@ -1,93 +1,70 @@
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/function'
+import * as T from 'io-ts'
 
 import {
-  AuthData,
-  AuthError,
-  decodeError,
-  ForgotPasswordModel,
-  LoginModel,
-  RegisterModel,
-  validateAuthError,
+  ForgotPasswordResponse,
+  LoginResponse,
+  RegisterResponse,
+} from '#domain/auth'
+
+import type {
+  ForgotPasswordModelC,
+  ForgotPasswordResponseC,
+  LoginModelC,
+  LoginResponseC,
+  RegisterModelC,
+  RegisterResponseC,
 } from '#domain/auth'
 
 export const authService = {
   forgotPasswordTask: (
-    model: ForgotPasswordModel
-  ): TE.TaskEither<AuthError, AuthData> => {
+    model: ForgotPasswordModelC
+  ): TE.TaskEither<Error, ForgotPasswordResponseC> => {
     return pipe(
       model,
       postRequest('forgot-password'),
-      TE.chain(processByStatusCode),
-      TE.chain(parseJsonResponse)
+      TE.chain(parseJsonResponse),
+      TE.chainW(
+        (x: unknown): TE.TaskEither<T.Errors, ForgotPasswordResponseC> => {
+          return pipe(x, ForgotPasswordResponse.decode, TE.fromEither)
+        }
+      ),
+      TE.mapLeft(mapErrors)
     )
   },
-  loginTask: (model: LoginModel): TE.TaskEither<AuthError, AuthData> => {
+  loginTask: (model: LoginModelC): TE.TaskEither<Error, LoginResponseC> => {
     return pipe(
       model,
       postRequest('login'),
-      TE.chain(processByStatusCode),
       TE.chain(parseJsonResponse),
-      TE.chain(validateSuccessResponse)
+      TE.chainW((x: unknown): TE.TaskEither<T.Errors, LoginResponseC> => {
+        return pipe(x, LoginResponse.decode, TE.fromEither)
+      }),
+      TE.mapLeft(mapErrors)
     )
   },
-  registerTask: (model: RegisterModel): TE.TaskEither<AuthError, AuthData> => {
+  registerTask: (
+    model: RegisterModelC
+  ): TE.TaskEither<Error, RegisterResponseC> => {
     return pipe(
       model,
       postRequest('register'),
-      TE.chain(processByStatusCode),
-      TE.chain(parseJsonResponse)
+      TE.chain(parseJsonResponse),
+      TE.chainW((x: unknown): TE.TaskEither<T.Errors, RegisterResponseC> => {
+        return pipe(x, RegisterResponse.decode, TE.fromEither)
+      }),
+      TE.mapLeft(mapErrors)
     )
   },
 }
 
-const validateSuccessResponse = (
-  res: unknown
-): TE.TaskEither<AuthError, AuthData> =>
-  pipe(res, AuthData.decode, TE.fromEither, TE.mapLeft(decodeError))
-
-const onRejected =
-  (context: string) =>
-  (error: unknown): AuthError => {
-    if (error instanceof Error) {
-      return {
-        code: 'rejected error',
-        message: context,
-      }
-    }
-    return {
-      code: 'rejected error',
-      message: context,
-    }
-  }
-
-const parseJsonResponse = (response: Response) =>
-  TE.tryCatch(() => {
-    return response.json()
-  }, onRejected('parse-json'))
-
-const processByStatusCode = (
-  x: Response
-): TE.TaskEither<AuthError, Response> => {
-  if (x.status === 200) {
-    return TE.right(x)
-  }
-
-  // process error
-  return pipe(
-    x,
-    parseJsonResponse,
-    TE.chain(validateAuthError),
-    TE.chain((authError: AuthError) => TE.left(authError))
-  )
-}
-
 type ApiPath = 'forgot-password' | 'login' | 'register'
-type Model = ForgotPasswordModel | LoginModel | RegisterModel
+type Model = ForgotPasswordModelC | LoginModelC | RegisterModelC
 
 const postRequest =
   (path: ApiPath) =>
-  (model: Model): TE.TaskEither<AuthError, Response> =>
+  (model: Model): TE.TaskEither<Error, Response> =>
     TE.tryCatch((): Promise<Response> => {
       return fetch(`/api/${path}`, {
         method: 'POST',
@@ -97,4 +74,23 @@ const postRequest =
         },
         body: JSON.stringify(model),
       })
-    }, onRejected('fetch-request'))
+    }, onErrorThrow)
+
+const parseJsonResponse = (response: Response): TE.TaskEither<Error, unknown> =>
+  TE.tryCatch(() => {
+    return response.json()
+  }, onErrorThrow)
+
+const onErrorThrow = (error: unknown): Error => {
+  if (error instanceof Error) {
+    return error
+  }
+  return new Error('Some unexpected error')
+}
+
+const mapErrors = (error: Error | T.Errors) => {
+  if (error instanceof Error) {
+    return error
+  }
+  return new Error('Unexpected error occurred')
+}
