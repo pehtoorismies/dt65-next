@@ -31,7 +31,10 @@ export const ForgotPasswordPage: NextPage = () => {
         }
       }
     } else {
-      setGeneralError(result.left.message)
+      // push to Sentry: result.left.message
+      setGeneralError(
+        'Salasanan resetointilinkin lähetys epäonnistui. Kokeile hetken kuluttua uudelleen.'
+      )
     }
   }
 
