@@ -24,7 +24,7 @@ export const ForgotPasswordPage: NextPage = () => {
     if (E.isRight(result)) {
       switch (result.right.type) {
         case 'success': {
-          return await router.push('/login')
+          return await router.push('/')
         }
         case 'error': {
           return setGeneralError(result.right.message)
@@ -36,7 +36,7 @@ export const ForgotPasswordPage: NextPage = () => {
   }
 
   return (
-    <div>
+    <>
       <Head>
         <title>DT65 - Unohtunut salasana</title>
         <link rel="icon" href="/favicon.ico" />
@@ -46,6 +46,6 @@ export const ForgotPasswordPage: NextPage = () => {
         isSubmitting={isSubmitting}
         generalError={generalError}
       />
-    </div>
+    </>
   )
 }

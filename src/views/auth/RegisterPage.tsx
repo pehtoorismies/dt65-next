@@ -28,9 +28,9 @@ export const RegisterPage: NextPage = () => {
   }
 
   return (
-    <div>
+    <>
       <Head>
-        <title>DT65 - Kirjaudu</title>
+        <title>DT65 - Rekisteröidy</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Register
@@ -38,6 +38,6 @@ export const RegisterPage: NextPage = () => {
         isSubmitting={isSubmitting}
         fieldError={fieldError}
       />
-    </div>
+    </>
   )
 }

@@ -28,7 +28,7 @@ export const LoginPage: NextPage = () => {
   }
 
   return (
-    <div>
+    <>
       <Head>
         <title>DT65 - Kirjaudu</title>
         <link rel="icon" href="/favicon.ico" />
@@ -38,6 +38,6 @@ export const LoginPage: NextPage = () => {
         isSubmitting={isSubmitting}
         fieldError={fieldError}
       />
-    </div>
+    </>
   )
 }
