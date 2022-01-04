@@ -5,6 +5,7 @@ import { withVerifyBodyParameters, withVerifyPostMethod } from './middleware'
 import {
   createAuth0User,
   loginAuth0User,
+  nickExists,
   requestChangePasswordEmail,
 } from './auth0'
 
@@ -27,10 +28,20 @@ const registerHandler = async (
   const model = req.body as RegisterModelC
 
   if (model.registerSecretCode !== authConfig.registerSecretCode) {
-    res.status(401).json({
+    return res.status(401).json({
       type: 'error',
       code: 'invalid_secret_code',
       message: 'Secret code is invalid',
+    })
+  }
+
+  const existingNick = await nickExists(model.nick)
+
+  if (existingNick) {
+    return res.status(401).json({
+      type: 'error',
+      code: 'nick_exists',
+      message: 'Nick exists',
     })
   }
 
