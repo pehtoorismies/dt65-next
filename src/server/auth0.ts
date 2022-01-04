@@ -79,6 +79,14 @@ export const loginAuth0User = async (
   }
 }
 
+export const nickExists = async (nick: string): Promise<boolean> => {
+  const management = await getAuth0Management()
+  const users = await management.getUsers({
+    q: `nickname:"${nick}"`,
+  })
+  return users.length > 0
+}
+
 export const createAuth0User = async (
   model: RegisterModelC
 ): Promise<RegisterResponseC> => {
