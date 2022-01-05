@@ -1,4 +1,4 @@
-import '../src/pages/base.css'
+import '../src/styles/global.css'
 import { UserContextProvider } from '../src/context/UserContext'
 import { none, some } from 'fp-ts/Option'
 
