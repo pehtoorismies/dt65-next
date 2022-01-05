@@ -11,6 +11,7 @@
     "lint": "yarn eslint && yarn typecheck",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "find-deadcode": "ts-prune",
     "test": "jest --watch --verbose"
   },
   "dependencies": {
@@ -53,6 +54,7 @@
     "prettier": "2.4.1",
     "react-test-renderer": "17.0.2",
     "tailwindcss": "2.2.19",
+    "ts-prune": "0.10.3",
     "tsconfig-paths-webpack-plugin": "3.5.1",
     "typescript": "4.4.3",
     "uuid": "^8.3.2"
