@@ -1,12 +1,12 @@
 import * as t from 'io-ts'
 
-export const AuthData = t.type({
+const AuthData = t.type({
   accessToken: t.string,
   idToken: t.string,
   expiresIn: t.string,
 })
 
-export const AuthFailure = t.type({
+const AuthFailure = t.type({
   message: t.string,
   code: t.string,
 })

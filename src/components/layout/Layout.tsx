@@ -8,7 +8,7 @@ import { Link } from '#components/Link'
 import type { FC, VFC } from 'react'
 import type { User } from '#domain/user'
 
-export interface Props {
+interface Props {
   user: User
 }
 
