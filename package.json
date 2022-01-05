@@ -11,7 +11,7 @@
     "lint": "yarn eslint && yarn typecheck",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "find-deadcode": "ts-prune",
+    "find-deadcode": "./scripts/ci-prune.sh",
     "test": "jest --watch --verbose"
   },
   "dependencies": {
