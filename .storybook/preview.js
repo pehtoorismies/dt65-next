@@ -1,6 +1,14 @@
 import '../src/styles/global.css'
 import { UserContextProvider } from '../src/context/UserContext'
 import { none, some } from 'fp-ts/Option'
+import * as NextImage from 'next/image'
+
+const OriginalNextImage = NextImage.default
+
+Object.defineProperty(NextImage, 'default', {
+  configurable: true,
+  value: (props) => <OriginalNextImage {...props} unoptimized />,
+})
 
 const USER_MAP = {
   none,
