@@ -15,11 +15,12 @@ export const Button: FC<ButtonProps> = ({
   className,
   children,
 }) => {
+  const classes = `inline-flex items-center px-4 py-2 border border-transparent text-white leading-6 rounded bg-pink-400 hover:bg-pink-500 focus:border-pink-700 transition ease-in-out duration-150 cursor-not-allowed ${
+    className ?? ''
+  }`
+
   return (
-    <button
-      type={type || 'button'}
-      className={`inline-flex items-center px-4 py-2 border border-transparent text-white leading-6 rounded bg-pink-400 hover:bg-pink-500 focus:border-pink-700 transition ease-in-out duration-150 cursor-not-allowed ${className}`}
-    >
+    <button type={type || 'button'} className={classes}>
       {isLoading && <LoadingIcon />}
       {children}
     </button>
