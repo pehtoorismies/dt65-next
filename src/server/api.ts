@@ -1,5 +1,6 @@
 import { getAuthConfig } from '#config/config'
 import { ForgotPasswordModel, LoginModel, RegisterModel } from '#domain/auth'
+import { AUTH_ERROR_CODES } from '#config/constants'
 
 import { withVerifyBodyParameters, withVerifyPostMethod } from './middleware'
 import {
@@ -30,7 +31,7 @@ const registerHandler = async (
   if (model.registerSecretCode !== authConfig.registerSecretCode) {
     return res.status(401).json({
       type: 'error',
-      code: 'invalid_secret_code',
+      code: AUTH_ERROR_CODES.INVALID_REGISTER_SECRET,
       message: 'Secret code is invalid',
     })
   }
@@ -40,7 +41,7 @@ const registerHandler = async (
   if (existingNick) {
     return res.status(401).json({
       type: 'error',
-      code: 'nick_exists',
+      code: AUTH_ERROR_CODES.NICK_ALREADY_EXISTS,
       message: 'Nick exists',
     })
   }
@@ -65,7 +66,7 @@ const forgotPasswordHandler = async (
   if (!emailSanityCheck(email)) {
     return res.status(400).json({
       message: 'Email address is falsy',
-      code: 'invalid_request',
+      code: AUTH_ERROR_CODES.INVALID_EMAIL_FORMAT,
       type: 'error',
     })
   }
