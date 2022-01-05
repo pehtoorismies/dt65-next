@@ -12,7 +12,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "find-deadcode": "./scripts/ci-prune.sh",
-    "test": "jest --watch --verbose"
+    "test": "jest",
+    "test-watch": "jest --watch --verbose"
   },
   "dependencies": {
     "@heroicons/react": "1.0.4",
