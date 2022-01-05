@@ -1,4 +1,4 @@
-import './base.css'
+import '../styles/global.css'
 
 import { none } from 'fp-ts/Option'
 
@@ -7,7 +7,7 @@ import { Layout } from '#components/layout/Layout'
 
 import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <UserContextProvider getUser={getUser}>
       <Layout>
@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </UserContextProvider>
   )
 }
+
 export default MyApp
 
 const getUser = () => {
