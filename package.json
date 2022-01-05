@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@heroicons/react": "1.0.4",
+    "@sentry/nextjs": "^6.16.1",
     "@tailwindcss/forms": "0.4.0",
     "auth0": "2.37.0",
     "formik": "2.2.9",
