@@ -15,6 +15,7 @@ module.exports = {
       },
     },
   ],
+  staticDirs: ['../public'],
   webpackFinal: async (config, { configType }) => {
     config.resolve.plugins = [
       new TsconfigPathsPlugin({
