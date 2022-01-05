@@ -13,6 +13,7 @@ jobs:
           node-version: '16'
       - run: yarn
       - run: yarn lint
+      - run: yarn find-deadcode
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
