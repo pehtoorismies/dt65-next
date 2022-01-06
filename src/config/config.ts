@@ -25,3 +25,9 @@ export const getAuthConfig = (): AuthConfig => {
     ),
   }
 }
+// Get config from here
+// export const getSentryConfig = () => {
+//   return {
+//     dsn: getEnv(process.env.NEXT_PUBLIC_SENTRY_DSN, 'NEXT_PUBLIC_SENTRY_DSN'),
+//   }
+// }

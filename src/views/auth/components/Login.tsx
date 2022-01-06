@@ -61,6 +61,14 @@ export const Login: VFC<LoginProps> = ({
 
   return (
     <AuthTemplate title="Kirjaudu" generalError={generalError}>
+      <button
+        type="button"
+        onClick={() => {
+          throw new Error('Sentry Frontend Error')
+        }}
+      >
+        Throw error
+      </button>
       <form onSubmit={handleSubmit}>
         <TextInput
           id="email"

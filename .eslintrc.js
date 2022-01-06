@@ -42,8 +42,9 @@ module.exports = {
       'error',
       {
         case: 'pascalCase',
-        ignore: ['.ts$', 'stories.tsx$', '^_\\D+.tsx$'],
+        ignore: ['.ts$', 'stories.tsx$', '^_\\D+.tsx$', '.config.js$'],
       },
     ],
+    'unicorn/prefer-module': 'off',
   },
 }

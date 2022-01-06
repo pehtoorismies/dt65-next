@@ -1,7 +1,8 @@
 import Image from 'next/image'
 
-import type { VFC } from 'react'
 import { Link } from '#components/Link'
+
+import type { VFC } from 'react'
 
 export interface Props {}
 

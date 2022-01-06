@@ -7,11 +7,11 @@ import { Layout } from '#components/layout/Layout'
 
 import type { AppProps } from 'next/app'
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps, err }: AppProps & { err: unknown }) => {
   return (
     <UserContextProvider getUser={getUser}>
       <Layout>
-        <Component {...pageProps} />
+        <Component {...pageProps} err={err} />
       </Layout>
     </UserContextProvider>
   )
