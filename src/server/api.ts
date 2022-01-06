@@ -1,3 +1,5 @@
+import { withSentry } from '@sentry/nextjs'
+
 import { getAuthConfig } from '#config/config'
 import { ForgotPasswordModel, LoginModel, RegisterModel } from '#domain/auth'
 import { AUTH_ERROR_CODES } from '#config/constants'
@@ -11,7 +13,6 @@ import {
 } from './auth0'
 
 import type {
-  ForgotPasswordModelC,
   ForgotPasswordResponseC,
   LoginModelC,
   LoginResponseC,
@@ -62,7 +63,7 @@ const forgotPasswordHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<ForgotPasswordResponseC>
 ) => {
-  const { email } = req.body as ForgotPasswordModelC
+  const { email } = req.body
   if (!emailSanityCheck(email)) {
     return res.status(400).json({
       message: 'Email address is falsy',
@@ -100,14 +101,16 @@ const emailSanityCheck = (value: string): boolean => {
   )
 }
 
-export const loginApi = withVerifyPostMethod(
-  withVerifyBodyParameters(LoginModel)(loginHandler)
+export const loginApi = withSentry(
+  withVerifyPostMethod(withVerifyBodyParameters(LoginModel)(loginHandler))
 )
 
-export const registerApi = withVerifyPostMethod(
-  withVerifyBodyParameters(RegisterModel)(registerHandler)
+export const registerApi = withSentry(
+  withVerifyPostMethod(withVerifyBodyParameters(RegisterModel)(registerHandler))
 )
 
-export const forgotPasswordApi = withVerifyPostMethod(
-  withVerifyBodyParameters(ForgotPasswordModel)(forgotPasswordHandler)
+export const forgotPasswordApi = withSentry(
+  withVerifyPostMethod(
+    withVerifyBodyParameters(ForgotPasswordModel)(forgotPasswordHandler)
+  )
 )
