@@ -1,8 +1,29 @@
-const getEnv = (value: string | undefined, name: string): string => {
+const getString = (
+  value: string | undefined,
+  envVariableName: string
+): string => {
   if (!value?.trim()) {
-    throw new Error(`Missing environment value 'process.env.${name}'`)
+    throw new Error(
+      `Missing environment value 'process.env.${envVariableName}'`
+    )
   }
   return value
+}
+
+const getBoolean = (
+  value: string | undefined,
+  envVariableName: string
+): boolean => {
+  const envString = getString(value, envVariableName)
+  if (envString === 'true') {
+    return true
+  }
+  if (envString == 'false') {
+    return false
+  }
+  throw new Error(
+    `Wrong boolean environment value in 'process.env.${envVariableName}'. Allowed values are true or false`
+  )
 }
 
 type AuthConfig = {
@@ -15,19 +36,29 @@ type AuthConfig = {
 
 export const getAuthConfig = (): AuthConfig => {
   return {
-    domain: getEnv(process.env.AUTH_DOMAIN, 'AUTH_DOMAIN'),
-    clientId: getEnv(process.env.AUTH_CLIENT_ID, 'AUTH_DOMAIN'),
-    clientSecret: getEnv(process.env.AUTH_CLIENT_SECRET, 'AUTH_CLIENT_SECRET'),
-    jwtAudience: getEnv(process.env.JWT_AUDIENCE, 'JWT_AUDIENCE'),
-    registerSecretCode: getEnv(
+    domain: getString(process.env.AUTH_DOMAIN, 'AUTH_DOMAIN'),
+    clientId: getString(process.env.AUTH_CLIENT_ID, 'AUTH_DOMAIN'),
+    clientSecret: getString(
+      process.env.AUTH_CLIENT_SECRET,
+      'AUTH_CLIENT_SECRET'
+    ),
+    jwtAudience: getString(process.env.JWT_AUDIENCE, 'JWT_AUDIENCE'),
+    registerSecretCode: getString(
       process.env.REGISTER_SECRET_CODE,
       'REGISTER_SECRET_CODE'
     ),
   }
 }
-// Get config from here
-// export const getSentryConfig = () => {
-//   return {
-//     dsn: getEnv(process.env.NEXT_PUBLIC_SENTRY_DSN, 'NEXT_PUBLIC_SENTRY_DSN'),
-//   }
-// }
+
+type SentryConfig = {
+  enabled: boolean
+}
+
+export const getSentryConfig = (): SentryConfig => {
+  return {
+    enabled: getBoolean(
+      process.env.NEXT_PUBLIC_SENTRY_ENABLED,
+      'NEXT_PUBLIC_SENTRY_ENABLED'
+    ),
+  }
+}
