@@ -5,12 +5,15 @@ import { TextInput } from '#components/TextInput'
 import { Button } from '#components/button/Button'
 import { Link } from '#components/Link'
 import { createErrorObject } from '#views/auth/components/create-error-object'
+import { logger } from '#logging/logger'
 
 import { AuthTemplate } from './AuthTemplate'
 import { validateEmail, validatePassword } from './validations'
 
 import type { VFC } from 'react'
 import type { LoginModelC } from '#domain/auth'
+
+const { clientLogger } = logger()
 
 const validate = ({ email, password }: LoginModelC): Partial<LoginModelC> => {
   return createErrorObject([
@@ -59,16 +62,16 @@ export const Login: VFC<LoginProps> = ({
     }
   }, [fieldError, isSubmitting, setSubmitting, setErrors])
 
+  useEffect(() => {
+    if (generalError) {
+      clientLogger.warn('Login created generalError', {
+        generalError,
+      })
+    }
+  }, [generalError])
+
   return (
     <AuthTemplate title="Kirjaudu" generalError={generalError}>
-      <button
-        type="button"
-        onClick={() => {
-          throw new Error('Sentry Frontend Error')
-        }}
-      >
-        Throw error
-      </button>
       <form onSubmit={handleSubmit}>
         <TextInput
           id="email"
