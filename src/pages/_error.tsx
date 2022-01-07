@@ -16,13 +16,6 @@ export type ErrorProps = {
 const ErrorPage = (props: ErrorPageProps): JSX.Element => {
   const { statusCode, hasGetInitialPropsRun, err } = props
 
-  if (process.env.NEXT_PUBLIC_APP_STAGE !== 'development') {
-    console.warn(
-      'ErrorPage - Unexpected error caught, it was captured and sent to Sentry. Error details:'
-    )
-    console.error(err)
-  }
-
   if (!hasGetInitialPropsRun && err) {
     // getInitialProps is not called in case of
     // https://github.com/vercel/next.js/issues/8592. As a workaround, we pass
@@ -45,13 +38,6 @@ ErrorPage.getInitialProps = async (
       err,
     } as NextPageContext)) as ErrorProps
 
-  if (process.env.NEXT_PUBLIC_APP_STAGE !== 'production') {
-    console.error(
-      'ErrorPage.getInitialProps - Unexpected error caught, it was captured and sent to Sentry. Error details:',
-      err
-    )
-  }
-
   // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
   // getInitialProps has run
   errorInitialProps.hasGetInitialPropsRun = true
@@ -69,7 +55,7 @@ ErrorPage.getInitialProps = async (
   }
 
   Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${asPath}`)
+    new Error(`_error.tsx getInitialProps missing data at path: ${asPath}`)
   )
 
   await Sentry.flush(2000)
