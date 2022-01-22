@@ -50,7 +50,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-unicorn": "36.0.0",
-    "faker": "5.5.3",
+    "faker": "6.6.6",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.4.5",
     "postcss": "8.4.5",
